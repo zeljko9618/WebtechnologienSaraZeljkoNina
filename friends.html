@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Friends</title>
+  <meta charset="UTF-8">
+</head>
+
+<body>
+  <h1>Friends</h1>
+
+  <p>
+    <a href="logout.html">&lt;Logout</a> |
+    <a href="settings.html">Settings</a>
+  </p>
+
+  <ul>
+    <li><a href="chat.html?friend=Tom">Tom (3)</a></li>
+    <li><a href="chat.html?friend=Marvin">Marvin (1)</a></li>
+    <li><a href="chat.html?friend=Tick">Tick</a></li>
+    <li><a href="chat.html?friend=Trick">Trick</a></li>
+  </ul>
+
+  <hr>
+
+  <h2>New Requests</h2>
+  <ol>
+    <li>Friend request from <b>Track</b>
+      <input type="submit" value="Accept">
+      <input type="submit" value="Reject">
+    </li>
+  </ol>
+
+  <hr>
+
+  <form action="friends.html" method="post">
+    <input type="text" id="newfriend" name="newfriend" placeholder="Add Friend to List">
+    <input type="submit" value="Add">
+  </form>
+</body>
+</html>
