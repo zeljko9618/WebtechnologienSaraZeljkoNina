@@ -1,0 +1,22 @@
+/* normal link style */
+a {
+    text-decoration: none;
+    color: blue;
+}
+/* hover over normal link */
+a:hover {
+    color: hotpink;
+}
+
+/* special link style */
+a.spec {
+    color: red;
+
+    text-decoration: none;
+}
+
+/* hover over special link */
+a.spec:hover {
+    background-color: rgba(255, 99, 71, 0.6);
+}
+  
