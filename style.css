@@ -9,17 +9,31 @@ body {
 /* Schriftbild und Layout in settings.html */
 body, input, select, label, legend, textarea, button {
     font-family:        Verdana, sans-serif;
-    font-weight:        600;
+    font-weight:        normal;
     font-size:          12px;
     color:              #333;
 }
 
+/* Fotos rund machen und zentrieren */
+.round {
+    display: block;
+    margin: 0 auto;
+    border-radius: 100%;
+}
+
+/* Zentrieren von h1 */
+h1:not(.friend) {
+    text-align: center;
+}
+
 /* Fieldsets */
-fieldset {
+fieldset:not(.friend) {
 background-color: white;
 border: 2px dotted lightgray;
+width: 600px;
 padding: 10px;
 margin-bottom: 5px;
+margin: 0 auto;
 }
 
 /* Textarea */
@@ -29,23 +43,43 @@ height: 120px;
 resize: vertical;
 }
 
+/* Buttons */
+button {
+font-size: 12px;
+padding: 7px 14px;
+border: none;
+margin-top: 5px;
+cursor: pointer;
+}
+
 /* Blauer Button */
-button[type="submit"] {
+.blue {
 background-color: #007bff;
 color: white;
 }
 
 /* Grauer Button */
-button[type="button"] {
+.gray {
 background-color: #ccc;
 color: white;
 margin-right: 10px;
 }
 
+/* Inputs */
+input[type="text"],
+select {
+
+margin-bottom: 10px;
+padding: 5px;
+width: 200px;
+box-sizing: border-box;
+}
+
 /* Labels und Inputs angleichen in Base Data in settings.html */
 .base-data label, .register label, .login label {
-display: inline-block;
-width: 130px;         
+    text-align: right;
+    display: inline-block;
+    width: 130px;         
 }
 
 /* alles im Fieldset zentrieren, aber dann Legend bleibt linksbündig in settings.html */
@@ -76,30 +110,58 @@ text-align: left;
 }
 
 /* ----------------------------------------------------RULES FOR settings.html------------------------------------------------- */
-/* Inputs */
-input[type="text"],
-select {
-margin-bottom: 10px;
-padding: 5px;
-width: 200px;
-box-sizing: border-box;
-}
 
 /* Abstand zwischen den Radios */
 .chat-layout div {
 padding: 10px;
 }
 
-/* Buttons */
-button {
-font-size: 12px;
-padding: 7px 14px;
-border: none;
-margin-top: 5px;
-cursor: pointer;
-}
-
 /* Zentriert Buttons in settings.html */
 .buttons {
 text-align: center;
+}
+
+/* ----------------------------------------------------RULES FOR logout.html------------------------------------------------- */
+input[type="text"],
+input[type="password"] {
+  width: 200px;       /* gleiche Breite */
+  height: 20px;       /* gleiche Höhe */
+  padding: 10px;      /* gleiches Padding */
+  font-size: 16px;    /* gleiche Schriftgröße */
+  box-sizing: border-box; /* sorgt dafür, dass Padding und Border in der Gesamtgröße enthalten sind */
+}
+
+.logged-out {
+    text-align: center;
+}
+
+/* ----------------------------------------------------RULES FOR profile.html------------------------------------------------- */
+.profile-info .friend {
+    border: 1px solid black;
+    background-color: white;
+    width: 400px;
+    height: 220px;
+    padding: 5px;
+}
+
+.friend label {
+    font-weight: bold;
+} 
+
+.profile-container {
+    display: flex;
+    gap: 20px; /* Abstand zwischen Bild und Text */
+    align-items: flex-start;
+}
+
+.profile-container fieldset {
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 15px;
+    width: 700px;
+}
+
+.profile-container img {
+    display: block;
+    margin: 0; /* entfernt Standard-Margin von p */
 }
