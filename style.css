@@ -1,3 +1,5 @@
+/* ---------------------------------------------- Style Links ------------------------------------------------------------- */
+
 /* normal link style */
 a {
     text-decoration: none;
@@ -5,13 +7,13 @@ a {
 }
 /* hover over normal link */
 a:hover {
-    color: hotpink;
+    color: blue;
+    text-decoration: underline;
 }
 
 /* special link style */
 a.spec {
     color: red;
-
     text-decoration: none;
 }
 
@@ -19,4 +21,17 @@ a.spec {
 a.spec:hover {
     background-color: rgba(255, 99, 71, 0.6);
 }
+
+/* friendslist style */
+a.friendslist {
+    color: black;
+    text-decoration: none;
+}
+
+/* hover over friendslist link */
+a.friendslist:hover {
+    text-decoration: underline;
+}
+
+
   
