@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Login</title>
-  <meta charset="UTF-8">
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
@@ -11,18 +12,20 @@
   <h1>Please sign in</h1>
 
   <form action="friends.html" method="post">
-    <fieldset>
-      <legend>Login</legend>
+    <div class="login">
+      <fieldset>
+        <legend>Login</legend>
 
-      <label for="username">Username</label>
-      <input type="text" id="username" name="username" placeholder="Username"><br><br>
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" placeholder="Username"><br><br>
 
-      <label for="password">Password</label>
-      <input type="password" id="password" name="password" placeholder="Password"><br><br>
-    </fieldset>
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="Password"><br><br>
+      </fieldset>
+    </div>
+    <button type="submit" formaction="register.html" formmethod="get">Register</button>
+    <button type="submit" value="Login">Login</button>
 
-    <input type="submit" value="Register" formaction="register.html" formmethod="get">
-    <input type="submit" value="Login">
   </form>
 
 </body>
