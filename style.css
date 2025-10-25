@@ -22,12 +22,12 @@ body, input, select, label, legend, textarea, button {
 }
 
 /* Zentrieren von h1 */
-h1:not(.friend) {
+h1:not(.profile, .chat) {
     text-align: center;
 }
 
 /* Fieldsets */
-fieldset:not(.friend) {
+fieldset:not(.profile) {
 background-color: white;
 border: 2px dotted lightgray;
 width: 600px;
@@ -90,22 +90,43 @@ text-align: center;
 text-align: left;
 }
 
-/* ------------------------------------------------RULES FOR ResponsiveWebDesign ---------------------------------------------- */
+/* ---------------------------------------------- RULES FOR Responsive Web Design ------------------------------------------- */
+
+/* Wenn Bildschirm < 900px → Container sollen volle Breite nutzen */
 @media only screen and (max-width: 900px) {
-  input[type="text"],
-  select,
-  textarea {
-    width: 100%; /* Eingabefelder passen sich an */
+  .base-data,
+  .personal-information,
+  .register,
+  .login {
+    display: block;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0 10px;
+    box-sizing: border-box;
+  }
+}
+
+/* Wenn Bildschirm < 768px → Label und Input untereinander zentriert */
+@media (max-width: 768px) {
+  .base-data label,
+  .personal-information label,
+  .register label,
+  .login label {
+    display: block;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 2px;
   }
 
-  label {
-    display: block; /* Labels nicht mehr neben Inputs, sondern darüber */
-    text-align: left;
-    width: auto;
-  }
-    .base-data, .register, .login {
+  .base-data input,
+  .personal-information input,
+  .register input,
+  .login input {
     display: block;
-    width: 100%; /* nutzt die ganze Breite auf kleinen Bildschirmen */
+    width: 80%;
+    max-width: 300px;
+    margin: 0 auto 5px auto;
   }
 }
 
