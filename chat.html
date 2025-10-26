@@ -1,19 +1,36 @@
 <!DOCTYPE html>
 <html>
-<body>
+  <head>
+    <meta charset="UTF-8">
+    <title>Chat</title>
+    <link rel="stylesheet" href="./style.css">
+  </head>
 
-<h1>Chat with Tom</h1>
+  <body class="chat-page">
+    <h1>Chat with Tom</h1>
 
-<a href="">&lt;Back to ref</a> |
-<a href="">Profile</a> |
-<a href="">Remove friend</a>
+    <p>
+      <a href="friends.html">&lt;Back</a> |
+      <a href="profile.html">Profile</a> |
+      <a href="#" class="remove-friend">Remove Friend</a>
+    </p>
 
-<p>Tom: Hallo, Welt!</p>
-<p>Jerry: Wie gehts?</p>
+    <div class="chat-box">
+      <div class="message">
+        <span class="sender">Tom:</span><span class="text">Hallo, Welt!</span>
+        <span class="time">19:43:01</span>
+      </div>
+      <div class="message">
+        <span class="sender">Jerry:</span><span class="text">Wie geht’s?</span>
+        <span class="time">19:57:20</span>
+      </div>
+    </div>
 
-<input type="text" id="New Message" name="newmessage" placeholder="New Message">
+    <hr class="chat-separator">
 
-<button type="button">Send</button>
-
-</body>
+    <form class="chat-input" action="#" method="post">
+      <input type="text" id="newmessage" name="newmessage" placeholder="New Message">
+      <button type="submit">Send</button>
+    </form>
+  </body>
 </html>
