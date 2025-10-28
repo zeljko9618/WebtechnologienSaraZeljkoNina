@@ -1,0 +1,188 @@
+/* -----------------------------------------------------GENERAL RULES FOR ALL FILES------------------------------------------- */
+/* Grauer Hintegrund*/
+body {
+    background-color: #f5f5f5;
+    margin: 20px;
+    width: 100%;
+}
+
+/* Schriftbild und Layout in settings.html */
+body, input, select, label, legend, textarea, button {
+    font-family:        Verdana, sans-serif;
+    font-weight:        normal;
+    font-size:          12px;
+    color:              #333;
+}
+
+/* Fotos rund machen und zentrieren */
+.round {
+    display: block;
+    margin: 0 auto;
+    border-radius: 100%;
+}
+
+/* Zentrieren von h1 */
+h1:not(.profile, .chat) {
+    text-align: center;
+}
+
+/* Fieldsets */
+fieldset:not(.profile) {
+background-color: white;
+border: 2px dotted lightgray;
+width: 600px;
+padding: 10px;
+margin-bottom: 5px;
+margin: 0 auto;
+}
+
+/* Textarea */
+textarea {
+width: 100%;
+height: 120px;
+resize: vertical;
+}
+
+/* Buttons */
+button {
+font-size: 12px;
+padding: 7px 14px;
+border: none;
+margin-top: 5px;
+cursor: pointer;
+}
+
+/* Blauer Button */
+.blue {
+background-color: #007bff;
+color: white;
+}
+
+/* Grauer Button */
+.gray {
+background-color: #ccc;
+color: white;
+margin-right: 10px;
+}
+
+/* Inputs */
+input[type="text"],
+select {
+
+margin-bottom: 10px;
+padding: 5px;
+width: 200px;
+box-sizing: border-box;
+}
+
+/* Labels und Inputs angleichen in Base Data in settings.html */
+.base-data label, .register label, .login label {
+    text-align: right;
+    display: inline-block;
+    width: 130px;         
+}
+
+/* alles im Fieldset zentrieren, aber dann Legend bleibt linksbündig in settings.html */
+.base-data fieldset, .register fieldset, .login fieldset {
+text-align: center;
+}
+.base-data legend, .register legend, .login legend {
+text-align: left;
+}
+
+/* ---------------------------------------------- RULES FOR Responsive Web Design ------------------------------------------- */
+
+/* Wenn Bildschirm < 900px → Container sollen volle Breite nutzen */
+@media only screen and (max-width: 900px) {
+  .base-data,
+  .personal-information,
+  .register,
+  .login {
+    display: block;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0 10px;
+    box-sizing: border-box;
+  }
+}
+
+/* Wenn Bildschirm < 768px → Label und Input untereinander zentriert */
+@media (max-width: 768px) {
+  .base-data label,
+  .personal-information label,
+  .register label,
+  .login label {
+    display: block;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 2px;
+  }
+
+  .base-data input,
+  .personal-information input,
+  .register input,
+  .login input {
+    display: block;
+    width: 80%;
+    max-width: 300px;
+    margin: 0 auto 5px auto;
+  }
+}
+
+/* ----------------------------------------------------RULES FOR settings.html------------------------------------------------- */
+
+/* Abstand zwischen den Radios */
+.chat-layout div {
+padding: 10px;
+}
+
+/* Zentriert Buttons in settings.html */
+.buttons {
+text-align: center;
+}
+
+/* ----------------------------------------------------RULES FOR logout.html------------------------------------------------- */
+input[type="text"],
+input[type="password"] {
+  width: 200px;       /* gleiche Breite */
+  height: 20px;       /* gleiche Höhe */
+  padding: 10px;      /* gleiches Padding */
+  font-size: 16px;    /* gleiche Schriftgröße */
+  box-sizing: border-box; /* sorgt dafür, dass Padding und Border in der Gesamtgröße enthalten sind */
+}
+
+.logged-out {
+    text-align: center;
+}
+
+/* ----------------------------------------------------RULES FOR profile.html------------------------------------------------- */
+.profile-info .friend {
+    border: 1px solid black;
+    background-color: white;
+    width: 400px;
+    height: 220px;
+    padding: 5px;
+}
+
+.friend label {
+    font-weight: bold;
+} 
+
+.profile-container {
+    display: flex;
+    gap: 20px; /* Abstand zwischen Bild und Text */
+    align-items: flex-start;
+}
+
+.profile-container fieldset {
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 15px;
+    width: 700px;
+}
+
+.profile-container img {
+    display: block;
+    margin: 0; /* entfernt Standard-Margin von p */
+}

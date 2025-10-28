@@ -1,28 +1,33 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Login</title>
-  <meta charset="UTF-8">
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
-  <img src="images/chat.png" width="90" height="90">
+  <img class="round" src="images/chat.png" width="90" height="90">
 
   <h1>Please sign in</h1>
 
   <form action="friends.html" method="post">
-    <fieldset>
-      <legend>Login</legend>
+    <div class="login">
+      <fieldset>
+        <legend>Login</legend>
 
-      <label for="username">Username</label>
-      <input type="text" id="username" name="username" placeholder="Username"><br><br>
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" placeholder="Username"><br><br>
 
-      <label for="password">Password</label>
-      <input type="password" id="password" name="password" placeholder="Password"><br><br>
-    </fieldset>
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="Password"><br><br>
+      </fieldset>
+    </div>
+    <div class="buttons">
+    <button class="gray" type="submit" formaction="register.html" formmethod="get">Register</button>
+    <button class="blue" type="submit" formaction="friends.html" formmethod="get" value="Login">Login</button>
+    </div>
 
-    <input type="submit" value="Register" formaction="register.html" formmethod="get">
-    <input type="submit" value="Login">
   </form>
 
 </body>

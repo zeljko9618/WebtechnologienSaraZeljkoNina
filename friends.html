@@ -1,40 +1,41 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Friends</title>
-  <meta charset="UTF-8">
-</head>
+  <head>
+      <meta charset="UTF-8">
+      <title>Friends</title>
+      <link rel="stylesheet" href="./style.css">
+  </head>
 
-<body>
-  <h1>Friends</h1>
+  <body>
+    <h1>Friends</h1>
 
-  <p>
-    <a href="logout.html">&lt;Logout</a> |
-    <a href="settings.html">Settings</a>
-  </p>
+    <p>
+      <a href="logout.html">&lt;Logout</a> |
+      <a href="settings.html">Settings</a>
+    </p>
 
-  <ul>
-    <li><a href="chat.html?friend=Tom">Tom (3)</a></li>
-    <li><a href="chat.html?friend=Marvin">Marvin (1)</a></li>
-    <li><a href="chat.html?friend=Tick">Tick</a></li>
-    <li><a href="chat.html?friend=Trick">Trick</a></li>
-  </ul>
+    <ul>
+      <li><a href="chat.html?friend=Tom">Tom (3)</a></li>
+      <li><a href="chat.html?friend=Marvin">Marvin (1)</a></li>
+      <li><a href="chat.html?friend=Tick">Tick</a></li>
+      <li><a href="chat.html?friend=Trick">Trick</a></li>
+    </ul>
 
-  <hr>
+    <hr>
 
-  <h2>New Requests</h2>
-  <ol>
-    <li>Friend request from <b>Track</b>
-      <input type="submit" value="Accept">
-      <input type="submit" value="Reject">
-    </li>
-  </ol>
+    <h2>New Requests</h2>
+    <ol>
+      <li>Friend request from <b>Track</b>
+        <button type="button" value="Accept">Accept</button>
+        <button type="button" value="Reject">Reject</button>
+      </li>
+    </ol>
 
-  <hr>
+    <hr>
 
-  <form action="friends.html" method="post">
-    <input type="text" id="newfriend" name="newfriend" placeholder="Add Friend to List">
-    <input type="submit" value="Add">
-  </form>
-</body>
+    <form action="friends.html" method="post">
+      <input type="text" id="newfriend" name="newfriend" placeholder="Add Friend to List">
+      <button type="button" value="Add">Add</button>
+    </form>
+  </body>
 </html>
