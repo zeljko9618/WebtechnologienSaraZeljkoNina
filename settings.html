@@ -6,11 +6,11 @@
     <link rel="stylesheet" href="./style.css">
   </head>
 
-  <body>
+  <body class="base-data">
     <h1>Profile Settings</h1>
 
-    <!-- bleibt auf der aktuellen Seite, weil action leer ist -->
     <form action="" method="get">
+      <!-- 1. Bereich: Basisdaten -->
       <fieldset>
         <legend>Base Data</legend>
 
@@ -24,29 +24,32 @@
         <select id="drink" name="drink">
           <option value="coffee">Coffee</option>
           <option value="tea">Tea</option>
-          <option value="neither" selected>Neither</option>
+          <option value="neither" selected>Neither nor</option>
         </select>
       </fieldset>
 
+      <!-- 2. Bereich: Persönliche Info -->
       <fieldset>
         <legend>Tell Something About You</legend>
-        <!-- Textarea -->
         <textarea id="personalInfo" name="personalInfo" placeholder="Leave a comment here" rows="3" cols="40"></textarea>
       </fieldset>
 
-      <fieldset>
+      <!-- 3. Bereich: Layout-Präferenz -->
+      <fieldset class="chat-layout">
         <legend>Preferred Chat Layout</legend>
-        <!-- Radios -->
+
         <input type="radio" id="layout1" name="layout" value="one-line">
         <label for="layout1">Username and message in one line</label><br>
 
         <input type="radio" id="layout2" name="layout" value="separated-line">
-        <label for="layout2">Username and message in separated line</label><br>
+        <label for="layout2">Username and message in separated lines</label><br>
       </fieldset>
 
-      <!-- Buttons -->
-      <button type="button" onclick="window.location.href='friendslist.html'">Cancel</button>
-      <button type="submit">Save</button>
+      <!-- Buttons unten zentriert -->
+      <div class="buttons">
+        <button type="button" class="gray" onclick="window.location.href='friends.html'">Cancel</button>
+        <button type="submit" class="blue">Save</button>
+      </div>
     </form>
   </body>
 </html>
