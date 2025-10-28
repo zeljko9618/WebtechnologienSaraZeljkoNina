@@ -1,8 +1,8 @@
-/* ============================================================GENERAL RULES FOR ALL FILES   ============================================================ */
+/* ============================================================GENERAL RULES FOR ALL FILES============================================================ */
 
 /* Grundlayout und Hintergrundfarbe der Seite */
 body {
-  background-color:#f5f9fc;
+  background-color: #f5f9fc;
   margin: 20px;
   width: 100%;
 }
@@ -12,7 +12,7 @@ body, input, select, label, legend, textarea, button {
   font-family: Verdana, sans-serif;
   font-weight: normal;
   font-size: 12px;
-  color: #000;
+  color: #333;
 }
 
 /* Runde Bilder (z. B. Profilbild, Logo) und zentriert */
@@ -22,13 +22,13 @@ body, input, select, label, legend, textarea, button {
   border-radius: 100%;
 }
 
-/* Überschriften zentrieren, außer mit Klasse .friend */
-h1:not(.friend) {
+/* Überschriften zentrieren, außer mit Klasse .friend oder .chat */
+h1:not(.friend, .profile, .chat) {
   text-align: center;
 }
 
 /* Allgemeine Fieldsets mit weißem Hintergrund und gepunktetem Rand */
-fieldset:not(.friend) {
+fieldset:not(.friend, .profile) {
   background-color: white;
   border: 2px dotted lightgray;
   width: 700px;
@@ -42,6 +42,10 @@ textarea {
   width: 100%;
   height: 120px;
   resize: vertical;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 6px;
+  box-sizing: border-box;
 }
 
 /* Grundstil für Buttons */
@@ -51,23 +55,29 @@ button {
   border: none;
   margin-top: 5px;
   cursor: pointer;
+  border-radius: 3px;
 }
 
 /* Blauer Hauptbutton (z. B. „Save“) */
-.blue {
+button.blue {
   background-color: #007bff;
   color: white;
+  margin-right: 10px;
+}
+button.blue:hover {
+  background-color: #0056d6;
 }
 
 /* Grauer Sekundärbutton (z. B. „Cancel“) */
-.gray {
+button.gray {
   background-color: #ccc;
   color: white;
   margin-right: 10px;
 }
 
 /* Einheitliches Design für Eingabefelder und Dropdowns */
-input[type="text"], select {
+input[type="text"],
+select {
   margin-bottom: 10px;
   padding: 5px;
   width: 200px;
@@ -91,19 +101,163 @@ input[type="text"], select {
   text-align: left;
 }
 
+/* ---------------------------------------------- Style Links ------------------------------------------------------------- */
+
+/* normal link style */
+a {
+  text-decoration: none;
+  color: blue;
+}
+/* hover over normal link */
+a:hover {
+  color: blue;
+  text-decoration: underline;
+}
+
+/* special link style */
+a.spec {
+  color: red;
+  text-decoration: none;
+}
+
+/* hover over special link */
+a.spec:hover {
+  background-color: rgba(255, 99, 71, 0.6);
+}
+
+/* friendslist style */
+a.friendslist {
+  color: black;
+  text-decoration: none;
+}
+
+/* hover over friendslist link */
+a.friendslist:hover {
+  text-decoration: underline;
+}
+
+/* ============================================================RESPONSIVE WEB DESIGN============================================================ */
+
+/* Wenn Bildschirm < 900px → Container sollen volle Breite nutzen */
+@media only screen and (max-width: 900px) {
+  .base-data,
+  .personal-information,
+  .register,
+  .login {
+    display: block;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0 10px;
+    box-sizing: border-box;
+  }
+}
+
+/* Wenn Bildschirm < 768px → Label und Input untereinander zentriert */
+@media (max-width: 768px) {
+  .base-data label,
+  .personal-information label,
+  .register label,
+  .login label {
+    display: block;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 2px;
+  }
+
+  .base-data input,
+  .personal-information input,
+  .register input,
+  .login input {
+    display: block;
+    width: 80%;
+    max-width: 300px;
+    margin: 0 auto 5px auto;
+  }
+}
+
 /* ============================================================RULES FOR settings.html============================================================ */
 
-/* Innenabstand für Chat-Layout-Bereiche */
 .chat-layout div {
   padding: 10px;
 }
 
-/* Zentrierung der Buttons (Cancel / Save) */
 .buttons {
   text-align: center;
 }
+
+/* Gesamte Seite (Hintergrund & Grundlayout) */
+body.base-data {
+  background-color: #f5f9fc;
+  color: #000;
+  margin: 0;
+  padding: 40px;
+}
+
+/* Überschrift "Profile Settings" */
+body.base-data h1 {
+  text-align: center;
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+/* Fieldsets */
+fieldset:not(.friend) {
+  background-color: #ffffff;
+  border: 2px dotted lightgray;
+  width: 700px;
+  padding: 10px;
+  margin: 10px auto;
+  box-sizing: border-box;
+}
+
+/* Legend */
+legend {
+  font-weight: bold;
+  font-size: 13px;
+  color: #333;
+  text-align: left;
+}
+
+/* Labels & Inputs */
+.base-data input[type="text"],
+.base-data select {
+  width: 200px;
+  padding: 5px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+/* Chat Layout */
+.chat-layout {
+  text-align: left !important;
+  padding-left: 20px;
+  margin: 0 auto;
+  width: 700px;
+  box-sizing: border-box;
+}
+.chat-layout input[type="radio"] {
+  margin-right: 8px;
+  vertical-align: middle;
+}
+.chat-layout label {
+  display: inline-block;
+  margin-bottom: 6px;
+  font-size: 12px;
+  line-height: 1.4;
+  width: auto;
+  text-align: left;
+}
+.chat-layout legend {
+  text-align: left;
+  font-weight: bold;
+}
+
 /* ============================================================RULES FOR logout.html============================================================ */
-/* Einheitliche Größe und Formatierung für Text- und Passwortfelder */
+
 input[type="text"],
 input[type="password"] {
   width: 200px;
@@ -113,12 +267,10 @@ input[type="password"] {
   box-sizing: border-box;
 }
 
-/* Zentrierter Textbereich für Logout-Meldungen */
 .logged-out {
   text-align: center;
 }
 
-/* --- Login-Seite vertikal und horizontal zentrieren --- */
 body {
   display: flex;
   flex-direction: column;
@@ -128,7 +280,6 @@ body {
   margin: 0;
 }
 
-/* Schriftart nur für Labels (Username, Password etc.) */
 .login label,
 legend,
 ::placeholder {
@@ -141,15 +292,12 @@ legend,
   color: #888; 
 }
 
-/* =======================LOGOUT-SEITE======================= */
-/* Stil für Logout-Überschrift */
 .logged-out h1 {
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
   font-size: 22px;
   margin-bottom: 5px;
 }
-/* Stil für Logout-Nachricht („You have been logged out“) */
 .logged-out .bye-text {
   font-size: 14px;
   color: #555;
@@ -161,8 +309,6 @@ legend,
 body.friends-page {
   display: block;
 }
-
-/* Überschrift "Friends" linksbündig und fett */
 body.friends-page h1 {
   text-align: left;
   font-size: 22px;
@@ -170,8 +316,6 @@ body.friends-page h1 {
   max-width: 900px;
   margin: 0 auto 5px auto;
 }
-
-/* Navigation "<Logout | Settings" */
 body.friends-page p {
   max-width: 900px;
   margin: 0 auto 0 277px;
@@ -179,14 +323,12 @@ body.friends-page p {
   border-bottom: 1px solid #ccc;
   padding-bottom: 6px;
 }
-/* Stil für Navigationslinks */
 body.friends-page p a {
   font-size: 12px;
   color: #007bff;
   text-decoration: none;
   margin: 0 6px;
 }
-/* Liste aller Freunde im weißen Kasten */
 body.friends-page ul {
   list-style: none;
   margin: 10px auto 10px 280px;
@@ -196,7 +338,6 @@ body.friends-page ul {
   background-color: #fff;
   box-sizing: border-box;
 }
-/* Gestaltung einzelner Freund-Einträge */
 body.friends-page ul li {
   display: flex;
   justify-content: space-between;
@@ -204,12 +345,9 @@ body.friends-page ul li {
   padding: 8px 0;
   border-bottom: none;
 }
-
 body.friends-page ul li:last-child {
   border-bottom: none;
 }
-
-/* Blaue Nachrichtenzähler */
 body.friends-page ul li span {
   background-color: #007bff;
   color: white;
@@ -217,18 +355,13 @@ body.friends-page ul li span {
   padding: 2px 6px;
   border-radius: 3px;
 }
-
-/* Abschnitt "New Requests" */
 body.friends-page h2 {
   width: 900px;
   margin: 15px 0 5px 277px;
   font-size: 16px;
   font-weight: bold;
   text-align: left;
-  padding-left: 0;
 }
-
-/* Textzeile "Friend request from Track" */
 body.friends-page ol {
   list-style-position: inside;
   background: transparent;
@@ -236,34 +369,23 @@ body.friends-page ol {
   padding: 0;
   width: 900px;
   margin: 0 0 8px 300px;
-  box-sizing: border-box;
 }
-/* Gestaltung einzelner Anfragezeilen */
 body.friends-page ol li {
   margin: 2px 0;
   line-height: 1.35;
 }
-/* Stil der Buttons "Accept" / "Reject" */
 body.friends-page ol button {
   margin-left: 8px;
   padding: 5px 10px;
   font-size: 12px;
 }
-
-/* Bereich "Add Friend to List" */
 body.friends-page form {
   width: 900px;
   margin: 8px 0 0 277px;
-  background: none;
-  border: none;
-  padding: 0;
   display: flex;
-  justify-content: flex-start;
   align-items: center;
   box-sizing: border-box;
 }
-
-/* Eingabefeld */
 body.friends-page input[type="text"] {
   width: 770px;
   height: 32px;
@@ -274,10 +396,7 @@ body.friends-page input[type="text"] {
   margin-right: 8px;
   background-color: #fff;
   box-sizing: border-box;
-  flex-grow: 1;
 }
-
-/* Add-Button */
 body.friends-page form button {
   width: 100px;
   height: 30px;
@@ -294,12 +413,9 @@ body.friends-page form button {
   box-sizing: border-box;
   margin-top: -12px;
 }
-
 body.friends-page form button:hover {
   opacity: 0.9;
 }
-
-/* Allgemeine Buttons */
 body.friends-page button {
   font-size: 13px;
   padding: 6px 14px;
@@ -310,26 +426,21 @@ body.friends-page button {
   background-color: #a0a0a0 !important;
   color: white;
 }
-
-/* Linie unter dem Freunde-Feld */
 body.friends-page hr {
   width: 900px;
   margin: 0 auto 0 277px;
   border: none;
   border-top: 1px solid #ccc;
 }
-/* ----------------------------------------------------RULES FOR chat.html------------------------------------------------- */
 
-/* Grundlayout der Chat-Seite */
+/* ============================================================RULES FOR chat.html============================================================ */
+
 body.chat-page {
   display: block;
-  font-family: Verdana, sans-serif;
   color: #000;
   margin: 0;
   padding: 40px;
 }
-
-/* Überschrift des Chats (z. B. "Chat with Tom") */
 body.chat-page h1 {
   text-align: left;
   font-size: 20px;
@@ -337,8 +448,6 @@ body.chat-page h1 {
   max-width: 900px;
   margin: 0 auto 5px auto;
 }
-
-/* Navigationszeile mit Links (Back, Profile, Remove Friend) */
 body.chat-page p {
   max-width: 900px;
   margin: 0 auto;
@@ -346,21 +455,15 @@ body.chat-page p {
   border-bottom: 1px solid #ccc;
   padding-bottom: 6px;
 }
-
-/* Standard-Linkgestaltung innerhalb der Navigation */
 body.chat-page p a {
   font-size: 12px;
   text-decoration: none;
   margin: 0 6px;
   color: #007bff;
 }
-
-/* "Remove Friend" Link in Rot */
 body.chat-page p a.remove-friend {
   color: #d62828;
 }
-
-/* Weißer Chat-Kasten für Nachrichten */
 .chat-box {
   width: 900px;
   margin: 10px auto;
@@ -370,42 +473,30 @@ body.chat-page p a.remove-friend {
   box-sizing: border-box;
   min-height: 100px;
 }
-
-/* Einzelne Chatnachricht (eine Zeile im Chatfenster) */
 .chat-box .message {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
   margin: 5px 0;
 }
-
-/* Absendername fett (z. B. "Tom:") */
 .chat-box .sender {
   font-weight: bold;
   margin-right: 3px;
 }
-
-/* Nachrichtentext */
 .chat-box .text {
   flex-grow: 1;
 }
-
-/* Zeitangabe der Nachricht (klein und grau) */
 .chat-box .time {
   color: #999;
   font-size: 11px;
   margin-left: 10px;
 }
-
-/* Linie unter dem Chat-Fenster */
 .chat-separator {
   width: 900px;
   margin: 10px auto;
   border: none;
   border-top: 1px solid #ccc;
 }
-
-/* Eingabebereich unterhalb des Chats (Textfeld + Send-Button) */
 .chat-input {
   width: 900px;
   margin: 6px auto 0 auto;
@@ -414,8 +505,6 @@ body.chat-page p a.remove-friend {
   align-items: center;
   box-sizing: border-box;
 }
-
-/* Eingabefeld für neue Nachrichten */
 .chat-input input[type="text"] {
   flex-grow: 1;
   padding: 7px;
@@ -427,8 +516,6 @@ body.chat-page p a.remove-friend {
   height: 32px;
   box-sizing: border-box;
 }
-
-/* Send-Button neben dem Eingabefeld */
 .chat-input button {
   width: 100px;
   height: 30px;
@@ -445,20 +532,16 @@ body.chat-page p a.remove-friend {
   box-sizing: border-box;
   margin-top: -12px;
 }
-
-/* Hover-Effekt für Send-Button */
 .chat-input button:hover {
   opacity: 0.9;
 }
 
-/* ----------------------------------------------------RULES FOR profile.html------------------------------------------------- */
-/* Grundlayout der Profilseite */
+/* ============================================================RULES FOR profile.html============================================================ */
+
 body.profile-page {
   display: block;
   padding: 40px;
 }
-
-/* Überschrift des Profils (z. B. „Profile of Tom“) */
 body.profile-page h1 {
   text-align: left;
   font-size: 22px;
@@ -466,8 +549,6 @@ body.profile-page h1 {
   max-width: 900px;
   margin: 0 auto 5px auto;
 }
-
-/* Navigation mit Links (Back | Remove friend) */
 body.profile-page p:first-of-type {
   max-width: 900px;
   margin: 0 auto;
@@ -475,21 +556,15 @@ body.profile-page p:first-of-type {
   border-bottom: 1px solid #ccc;
   padding-bottom: 6px;
 }
-
-/* Standard-Linkgestaltung */
 body.profile-page p a {
   font-size: 12px;
   color: #007bff;
   text-decoration: none;
   margin: 0 6px;
 }
-
-/* Hover-Effekt für Links */
 body.profile-page p a:hover {
   text-decoration: underline;
 }
-
-/* „Remove friend“-Link in Rot mit Hover-Dunkelrot */
 body.profile-page p a.remove-friend {
   color: #d62828;
 }
@@ -497,197 +572,32 @@ body.profile-page p a.remove-friend:hover {
   color: #a61b1b;
 }
 
-/* Container für Bild + Text nebeneinander */
+/* Profil-Container */
 .profile-container {
   display: flex;
+  gap: 20px;
+  align-items: flex-start;
   max-width: 800px;
   margin: 15px auto;
-  background: transparent;
-  border: none;
-  gap: 40px;
   box-sizing: border-box;
 }
-
-/* Linke Spalte mit Profilbild */
-.profile-left {
-  flex: 0 0 auto;
-  margin-left: -50px;
-}
-
-/* Rechte Spalte mit weißem Textkasten */
-.profile-right {
-  flex: 1 1 auto;
-  font-size: 13px;
-  line-height: 1.5;
-  background: #fff;
-  border: 1px dotted #ccc;
+.profile-container fieldset {
+  background-color: white;
+  border: 1px solid #ccc;
   padding: 15px;
-  box-sizing: border-box;
-}
-
-/* Profilbildgröße und Gestaltung */
-.profile-pic {
-  width: 300px;
-  height: 300px;
-  background-color: #007bff;
-  border-radius: 3px;
-  padding: 5px;
-  object-fit: contain;
-}
-
-/* Leichte Einrückung der Werte (z. B. „Tea“, „Thomas“) */
-.profile-right p b + br + text,
-.profile-right p b + br + * {
-  margin-left: 20px;
-}
-
-/* Abstände zwischen den Textzeilen */
-.profile-right p b + br {
-  display: block;
-  margin-bottom: 3px;
-}
-
-/* Einzelne Informationsblöcke im Profil */
-.profile-right .info-block {
-  margin: 0 0 8px 0;
-}
-
-/* Titel der Infoblöcke (z. B. „Name“) */
-.profile-right .info-block b {
-  display: block;
-  margin: 0;
-}
-
-/* Werte innerhalb der Infoblöcke eingerückt */
-.profile-right .info-value {
-  display: block;
-  margin: 0;
-  padding-left: 40px;
-}
-/* ============================================================RULES FOR settings.html============================================================ */
-
-/* Gesamte Seite (Hintergrund & Grundlayout) */
-body.base-data {
-  background-color: #f5f9fc; /* hellblauer Hintergrund */
-  font-family: Verdana, sans-serif;
-  color: #000;
-  margin: 0;
-  padding: 40px;
-}
-
-/* Überschrift "Profile Settings" */
-body.base-data h1 {
-  text-align: center;
-  font-size: 22px;
-  font-weight: bold;
-  margin-bottom: 15px;
-}
-
-/* Fieldsets – weiße Kästen, zentriert, mit gepunktetem Rand */
-fieldset:not(.friend) {
-  background-color: #ffffff;
-  border: 2px dotted lightgray;
   width: 700px;
-  padding: 10px;
-  margin: 10px auto; 
-  box-sizing: border-box;
 }
-
-/* Überschriften der Fieldsets (z. B. „Base Data“) */
-legend {
-  font-weight: bold;
-  font-size: 13px;
-  color: #333;
-  text-align: left;
+.profile-container img {
+  display: block;
+  margin: 0;
 }
-
-/* Labels & Eingabefelder angleichen */
-.base-data label {
-  display: inline-block;
-  width: 130px;
-  text-align: right;
-  margin-right: 10px;
-}
-/* Eingabefelder und Auswahlmenüs */
-.base-data input[type="text"],
-.base-data select {
-  width: 200px;
+.profile-info .friend {
+  border: 1px solid black;
+  background-color: white;
+  width: 400px;
+  height: 220px;
   padding: 5px;
-  margin-bottom: 10px;
-  box-sizing: border-box;
-  border: 1px solid #ccc;
-  border-radius: 3px;
 }
-
-/* Textarea (Kommentarbereich) */
-textarea {
-  width: 100%;
-  height: 120px;
-  resize: vertical;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-  padding: 6px;
-  box-sizing: border-box;
-  font-family: Verdana, sans-serif;
-  font-size: 12px;
-}
-
-/* Nur das Fieldset mit den Radios links ausrichten */
-.chat-layout {
-  text-align: left !important;     /* überschreibt zentrierte Ausrichtung */
-  padding-left: 20px;              /* kleiner Abstand links */
-  margin: 0 auto;
-  width: 700px;                    /* gleiche Breite wie andere Fieldsets */
-  box-sizing: border-box;
-}
-
-/* Jede Radio-Option bekommt eigene Zeile */
-.chat-layout input[type="radio"] {
-  margin-right: 8px;
-  vertical-align: middle;
-}
-
-/* Label steht direkt daneben */
-.chat-layout label {
-  display: inline-block;
-  margin-bottom: 6px;
-  font-size: 12px;
-  line-height: 1.4;
-  width: auto;
-  text-align: left;
-}
-
-/* Legend-Überschrift bleibt links */
-.chat-layout legend {
-  text-align: left;
+.friend label {
   font-weight: bold;
-}
-
-/* Gemeinsamer Button-Stil */
-button {
-  font-size: 12px;
-  padding: 7px 14px;
-  border: none;
-  margin-top: 5px;
-  cursor: pointer;
-  border-radius: 3px;
-}
-
-/* Grauer Button (Cancel) */
-button.gray {
-  background-color: #ccc;
-  color: white;
-  margin-right: 10px;
-}
-
-/* Blauer Button (Save) */
-button.blue {
-  background-color: #007bff;
-  color: white;
-    margin-right: 10px;
-
-}
-
-button.blue:hover {
-  background-color: #0056d6;
-}
+} 

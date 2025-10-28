@@ -1,24 +1,35 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Chat</title>
-        <link rel="stylesheet" href="./style.css">
-    </head>
-    <body>
-        <h1 class="chat">Chat with Tom</h1>
+  <head>
+    <meta charset="UTF-8">
+    <title>Chat</title>
+    <link rel="stylesheet" href="./style.css">
+  </head>
+  <body class="chat-page">
+    <h1>Chat with Tom</h1>
 
-        <a href="">&lt;Back to ref</a> |
-        <a href="">Profile</a> |
-        <a href="">Remove friend</a>
+    <p>
+      <a href="#" class="friendslist">&lt;Back</a> |
+      <a href="#">Profile</a> |
+      <a href="#" class="remove-friend">Remove Friend</a>
+    </p>
 
-        <p>Tom: Hallo, Welt!</p>
-        <p>Jerry: Wie gehts?</p>
+    <div class="chat-box">
+      <div class="message">
+        <span class="sender">Tom:</span>
+        <span class="text">Hallo, Welt!</span>
+        <span class="time">19:43:01</span>
+      </div>
+      <div class="message">
+        <span class="sender">Jerry:</span>
+        <span class="text">Wie gehts?</span>
+        <span class="time">19:57:20</span>
+      </div>
+    </div>
 
-        <input type="text" id="New Message" name="newmessage" placeholder="New Message">
-
-        <div class="buttons">
-            <button type="button">Send</button>
-        </div>
-    </body>
+    <div class="chat-input">
+      <input type="text" name="newmessage" placeholder="New Message">
+      <button type="button">Send</button>
+    </div>
+  </body>
 </html>
