@@ -178,6 +178,14 @@ a.friendslist:hover {
 
 /* ============================================================RULES FOR settings.html============================================================ */
 
+body.base-data h1 {
+  text-align: left;
+  font-size: 20px;
+  font-weight: bold;
+  max-width: 900px;
+  margin-left: 0;
+}
+
 .chat-layout div {
   padding: 10px;
 }
@@ -190,7 +198,7 @@ a.friendslist:hover {
 body.base-data {
   background-color: #f5f9fc;
   color: #000;
-  margin: 0;
+  margin: 0px -580px;
   padding: 40px;
 }
 
@@ -314,13 +322,13 @@ body.friends-page h1 {
   font-size: 22px;
   font-weight: bold;
   max-width: 900px;
-  margin: 0 auto 5px auto;
+  margin: 10px ;
 }
 body.friends-page p {
   max-width: 900px;
-  margin: 0 auto 0 277px;
+  margin: 10px;
   text-align: left;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px dashed #181818ed;
   padding-bottom: 6px;
 }
 body.friends-page p a {
@@ -331,7 +339,7 @@ body.friends-page p a {
 }
 body.friends-page ul {
   list-style: none;
-  margin: 10px auto 10px 280px;
+  margin: 10px;
   padding: 15px;
   width: 900px;
   border: 1px dotted #ccc;
@@ -357,7 +365,7 @@ body.friends-page ul li span {
 }
 body.friends-page h2 {
   width: 900px;
-  margin: 15px 0 5px 277px;
+  margin: 15px ;
   font-size: 16px;
   font-weight: bold;
   text-align: left;
@@ -368,7 +376,7 @@ body.friends-page ol {
   border: none;
   padding: 0;
   width: 900px;
-  margin: 0 0 8px 300px;
+  margin: 0 30px;
 }
 body.friends-page ol li {
   margin: 2px 0;
@@ -381,7 +389,7 @@ body.friends-page ol button {
 }
 body.friends-page form {
   width: 900px;
-  margin: 8px 0 0 277px;
+  margin: 10px ;
   display: flex;
   align-items: center;
   box-sizing: border-box;
@@ -428,9 +436,9 @@ body.friends-page button {
 }
 body.friends-page hr {
   width: 900px;
-  margin: 0 auto 0 277px;
+  margin: 10px;
   border: none;
-  border-top: 1px solid #ccc;
+  border-top: 1px dashed #181818ed;
 }
 
 /* ============================================================RULES FOR chat.html============================================================ */
@@ -438,7 +446,7 @@ body.friends-page hr {
 body.chat-page {
   display: block;
   color: #000;
-  margin: 0;
+  margin-left: 0;
   padding: 40px;
 }
 body.chat-page h1 {
@@ -446,19 +454,20 @@ body.chat-page h1 {
   font-size: 20px;
   font-weight: bold;
   max-width: 900px;
-  margin: 0 auto 5px auto;
+  margin-left: 0;
 }
 body.chat-page p {
   max-width: 900px;
-  margin: 0 auto;
+  margin-left: 0 ;
   text-align: left;
-  border-bottom: 1px solid #ccc;
+  padding: 10px;
+  border-bottom: 1px dotted #ccc;
   padding-bottom: 6px;
 }
 body.chat-page p a {
   font-size: 12px;
   text-decoration: none;
-  margin: 0 6px;
+  margin-left: 0 6px;
   color: #007bff;
 }
 body.chat-page p a.remove-friend {
@@ -466,17 +475,17 @@ body.chat-page p a.remove-friend {
 }
 .chat-box {
   width: 900px;
-  margin: 10px auto;
-  border: 1px dotted #ccc;
+  margin-left: 10px auto;
+  border: 1px solid #ccc;
   background-color: #fff;
   padding: 10px;
   box-sizing: border-box;
   min-height: 100px;
 }
 .chat-box .message {
-  display: flex;
+  display: block;
   justify-content: space-between;
-  align-items: baseline;
+  align-items: flex-start;
   margin: 5px 0;
 }
 .chat-box .sender {
@@ -489,7 +498,7 @@ body.chat-page p a.remove-friend {
 .chat-box .time {
   color: #999;
   font-size: 11px;
-  margin-left: 10px;
+  margin-left: 700px;
 }
 .chat-separator {
   width: 900px;
@@ -499,10 +508,11 @@ body.chat-page p a.remove-friend {
 }
 .chat-input {
   width: 900px;
-  margin: 6px auto 0 auto;
-  display: flex;
+  margin-left: 6px auto 0 auto;
+  border-top: 1px dotted #ccc;
+  display: block;
   justify-content: flex-start;
-  align-items: center;
+  align-items: flex-start;
   box-sizing: border-box;
 }
 .chat-input input[type="text"] {
@@ -512,6 +522,7 @@ body.chat-page p a.remove-friend {
   border-radius: 3px;
   font-size: 13px;
   margin-right: 10px;
+  margin-top: 25px;
   background-color: #fff;
   height: 32px;
   box-sizing: border-box;
@@ -525,12 +536,13 @@ body.chat-page p a.remove-friend {
   border: none;
   border-radius: 3px;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: block;
+  align-items: flex-start;
+  justify-content: flex-start;
   padding: 0;
   box-sizing: border-box;
-  margin-top: -12px;
+  margin-top: -40px;
+  margin-left: 800px;
 }
 .chat-input button:hover {
   opacity: 0.9;
@@ -540,20 +552,22 @@ body.chat-page p a.remove-friend {
 
 body.profile-page {
   display: block;
-  padding: 40px;
+  padding: 10px;
+  background-color: #ffffff;
+  
 }
 body.profile-page h1 {
   text-align: left;
   font-size: 22px;
   font-weight: bold;
   max-width: 900px;
-  margin: 0 auto 5px auto;
+  margin: 0;
 }
 body.profile-page p:first-of-type {
   max-width: 900px;
-  margin: 0 auto;
+  margin: 10px 10px;
   text-align: left;
-  border-bottom: 1px solid #ccc;
+  /*border-bottom: 1px solid #ccc;*/
   padding-bottom: 6px;
 }
 body.profile-page p a {
@@ -589,7 +603,7 @@ body.profile-page p a.remove-friend:hover {
 }
 .profile-container img {
   display: block;
-  margin: 0;
+  margin-left: -500px;
 }
 .profile-info .friend {
   border: 1px solid black;
@@ -601,3 +615,8 @@ body.profile-page p a.remove-friend:hover {
 .friend label {
   font-weight: bold;
 } 
+
+.profile-right {
+  border: 1px solid #ccc;
+  margin: 10px 0px;
+}
