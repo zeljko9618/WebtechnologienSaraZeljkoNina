@@ -14,8 +14,8 @@ document.querySelector("h1").innerText = "Chat with " + friend;
 function loadMessages() {
   const xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function () {
-    if (xmlhttp.readyState === 4) {
-      if (xmlhttp.status === 200) {
+    if (xmlhttp.readyState == 4) {
+      if (xmlhttp.status == 200) {
         const messages = JSON.parse(xmlhttp.responseText);
         displayMessages(messages);
       } else {
@@ -59,8 +59,8 @@ function sendMessage() {
 
   const xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function () {
-    if (xmlhttp.readyState === 4) {
-      if (xmlhttp.status === 204) {
+    if (xmlhttp.readyState == 4) {
+      if (xmlhttp.status == 204) {
         input.value = ""; // clear input
         loadMessages();   // reload immediately
       } else {
