@@ -3,31 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <title>Register here!</title>
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
   <img class="round" src="images/user.png" width="90" height="90">
   <h1>Register yourself</h1>
 
-  <form action="">
+  <form id="registerForm">
+
     <div class="register">
       <fieldset>
         <legend>Register</legend>
-          <label for="username">Username</label>
-          <input type="text" id="username" name="username" placeholder="Username""><br><br>
-          
-          <label for="pw">Password</label>
-          <input type="password" id="pw" name="pw" placeholder="Password"><br><br>
-          
-          <label for="pwconfirmation">Confirm Password</label>
-          <input type="password" id="pwconfirmation" name="pwconfirmation" placeholder="Confirm password"><br><br>
+
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" placeholder="Username">
+        <p class="error-message" id="usernameError"></p>
+
+        <label for="password">Password</label>
+        <input type="password" id="password" name="pw" placeholder="Password">
+        <p class="error-message" id="passwordError"></p>
+
+        <label for="passwordRepeat">Confirm Password</label>
+        <input type="password" id="passwordRepeat" name="pwconfirmation" placeholder="Confirm password">
+        <p class="error-message" id="passwordRepeatError"></p>
+
       </fieldset>
     </div>
+
+    <div class="buttons">
+      <button class="gray" type="button" onclick="window.location.href='friends.html'">Cancel</button>
+      <button class="blue" type="submit">Create Account</button>
+    </div>
+
   </form>
-<div class="buttons">
-  <button class="gray" type="button" value="Cancel">Cancel</button>
-  <button class="blue" type="submit" value="Create Account">Create Account</button>
-</div>
+
+  <script src="register.js"></script>
 </body>
 </html>
