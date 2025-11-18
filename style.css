@@ -136,6 +136,11 @@ a.friendslist:hover {
   text-decoration: underline;
 }
 
+/* hover over profile link */
+a.profile:hover {
+  text-decoration: underline;
+}
+
 /* ============================================================RESPONSIVE WEB DESIGN============================================================ */
 
 /* Wenn Bildschirm < 900px → Container sollen volle Breite nutzen */
@@ -306,6 +311,207 @@ legend,
 
 /* ============================================================RULES FOR friends.html============================================================ */
 
+/* kurzfristife änderung anfang*/
+
+/* ============================================================RULES FOR friends.html============================================================ */
+
+body.friends-page {
+  display: block;
+  background-color: #f5f9fc;
+  color: #000;
+  margin: 0;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Überschrift "Friends" */
+body.friends-page h1 {
+  text-align: left;
+  font-size: 22px;
+  font-weight: bold;
+  margin: 0 0 10px 0;
+}
+
+/* Obere Navigation (z. B. Logout | Settings) */
+body.friends-page p {
+  text-align: left;
+  font-size: 13px;
+  margin: 0 0 15px 0;
+  padding-bottom: 8px;
+  border-bottom: 1px dotted #ccc;
+}
+
+body.friends-page p a {
+  font-size: 13px;
+  color: #007bff;
+  text-decoration: none;
+  margin-right: 10px;
+}
+
+body.friends-page p a:hover {
+  text-decoration: underline;
+}
+
+/* Freunde-Liste */
+body.friends-page ul {
+  list-style: none;
+  margin: 0 0 20px 0;
+  padding: 10px;
+  width: 100%;
+  max-width: 900px;
+  border: 1px dotted #ccc;
+  background-color: #fff;
+  box-sizing: border-box;
+}
+
+body.friends-page ul li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px dotted #eee;
+}
+
+body.friends-page ul li:last-child {
+  border-bottom: none;
+}
+
+body.friends-page ul li span {
+  background-color: #007bff;
+  color: white;
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+
+/* "New Requests" Abschnitt */
+body.friends-page h2 {
+  font-size: 16px;
+  font-weight: bold;
+  margin: 20px 0 10px 0;
+  text-align: left;
+}
+
+/* Requests Liste */
+body.friends-page ol {
+  list-style-position: inside;
+  background: transparent;
+  border: none;
+  padding: 0;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 0 20px 0;
+}
+
+body.friends-page ol li {
+  margin: 4px 0;
+  line-height: 1.4;
+}
+
+/* Buttons in der Liste */
+body.friends-page ol button {
+  margin-left: 8px;
+  padding: 5px 10px;
+  font-size: 12px;
+  background-color: #a0a0a0;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+body.friends-page ol button:hover {
+  opacity: 0.9;
+}
+
+/* Formular zum Hinzufügen von Freunden */
+body.friends-page form {
+  width: 100%;
+  max-width: 900px;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-sizing: border-box;
+}
+
+body.friends-page input[type="text"] {
+  flex-grow: 1;
+  height: 32px;
+  padding: 6px 8px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: 13px;
+  background-color: #fff;
+  box-sizing: border-box;
+}
+
+body.friends-page form button {
+  flex-shrink: 0;
+  padding: 7px 14px;
+  font-size: 13px;
+  background-color: #a0a0a0;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+body.friends-page form button:hover {
+  opacity: 0.9;
+}
+
+/* Linie / Separator */
+body.friends-page hr {
+  width: 100%;
+  max-width: 900px;
+  margin: 15px 0;
+  border: none;
+  border-top: 1px dashed #ccc;
+}
+
+/* ============================================================RESPONSIVE DESIGN============================================================ */
+
+/* Tablet: unter 900px alles 100% Breite */
+@media (max-width: 900px) {
+  body.friends-page ul,
+  body.friends-page form,
+  body.friends-page ol {
+    max-width: 100%;
+  }
+}
+
+/* Smartphone: unter 600px Layout stapeln */
+@media (max-width: 600px) {
+  body.friends-page {
+    padding: 10px;
+  }
+
+  body.friends-page h1 {
+    font-size: 18px;
+  }
+
+  body.friends-page form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  body.friends-page form button {
+    width: 100%;
+  }
+
+  body.friends-page ul li {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  body.friends-page ul li span {
+    margin-top: 4px;
+  }
+}
+
+/* kurzfristige änderung ende
+---hier ursp code 
 body.friends-page {
   display: block;
 }
@@ -432,11 +638,166 @@ body.friends-page hr {
   border: none;
   border-top: 1px solid #ccc;
 }
+  Ende vom ursprunglichen code*/
 
 /* ============================================================RULES FOR chat.html============================================================ */
-
+/* kurzfristige änderung anfang*/
 body.chat-page {
-  display: block;
+  display: block; /* Kein Flexlayout, damit alles normal von oben nach unten fließt */
+  background-color: #f5f9fc;
+  color: #000;
+  margin: 0;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Überschrift oben links */
+body.chat-page h1 {
+  text-align: left;
+  font-size: 22px;
+  font-weight: bold;
+  margin: 0 0 10px 0;
+}
+
+/* Navigationsleiste (Back | Profile | Remove Friend) */
+body.chat-page p {
+  text-align: left;
+  margin: 0 0 15px 0;
+  padding-bottom: 8px;
+  border-bottom: 1px dotted #ccc;
+}
+
+body.chat-page p a {
+  font-size: 13px;
+  color: #007bff;
+  text-decoration: none;
+  margin-right: 10px;
+}
+
+body.chat-page p a.remove-friend {
+  color: #d62828;
+}
+
+body.chat-page p a:hover {
+  text-decoration: underline;
+}
+
+/* Chatbox mit Nachrichten */
+.chat-box {
+  width: 100%;
+  max-width: 900px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  padding: 10px;
+  box-sizing: border-box;
+  min-height: 200px;
+  overflow-y: auto;
+  margin-bottom: 10px;
+}
+
+/* Einzelne Nachricht */
+.chat-box .message {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+
+.chat-box .sender {
+  font-weight: bold;
+  color: #2a7ae2;
+  margin-right: 5px;
+}
+
+.chat-box .text {
+  flex-grow: 1;
+  margin-right: 10px;
+  word-wrap: break-word;
+}
+
+.chat-box .time {
+  color: #999;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+/* Eingabebereich */
+.chat-input {
+  width: 100%;
+  max-width: 900px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-top: 1px dotted #ccc;
+  padding-top: 10px;
+  box-sizing: border-box;
+}
+
+.chat-input input[type="text"] {
+  flex-grow: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: 13px;
+  background-color: #fff;
+  box-sizing: border-box;
+}
+
+.chat-input button {
+  flex-shrink: 0;
+  padding: 8px 16px;
+  font-size: 13px;
+  background-color: #a0a0a0;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.chat-input button:hover {
+  opacity: 0.9;
+}
+
+/* ============================================================RESPONSIVE DESIGN============================================================ */
+
+/* Tablet (unter 900px): Chatbox und Input 100% Breite */
+@media (max-width: 900px) {
+  .chat-box,
+  .chat-input {
+    max-width: 100%;
+  }
+}
+
+/* Smartphone (unter 600px): Schrift kleiner, Elemente untereinander */
+@media (max-width: 600px) {
+  body.chat-page {
+    padding: 10px;
+  }
+
+  body.chat-page h1 {
+    font-size: 18px;
+  }
+
+  .chat-box .message {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .chat-input {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .chat-input button {
+    width: 100%;
+  }
+}
+
+/** kurzfristige änderung ende hehe
+----------
+body.chat-page {
+  display: flex;
   color: #000;
   margin: 0;
   padding: 40px;
@@ -535,13 +896,15 @@ body.chat-page p a.remove-friend {
 .chat-input button:hover {
   opacity: 0.9;
 }
-
+*/
 /* ============================================================RULES FOR profile.html============================================================ */
 
 body.profile-page {
   display: block;
   padding: 40px;
 }
+
+/* Überschrift des Profils (z. B. „Profile of Tom“) */
 body.profile-page h1 {
   text-align: left;
   font-size: 22px;
@@ -549,6 +912,8 @@ body.profile-page h1 {
   max-width: 900px;
   margin: 0 auto 5px auto;
 }
+
+/* Navigation mit Links (Back | Remove friend) */
 body.profile-page p:first-of-type {
   max-width: 900px;
   margin: 0 auto;
@@ -556,15 +921,21 @@ body.profile-page p:first-of-type {
   border-bottom: 1px solid #ccc;
   padding-bottom: 6px;
 }
+
+/* Standard-Linkgestaltung */
 body.profile-page p a {
   font-size: 12px;
   color: #007bff;
   text-decoration: none;
   margin: 0 6px;
 }
+
+/* Hover-Effekt für Links */
 body.profile-page p a:hover {
   text-decoration: underline;
 }
+
+/* „Remove friend“-Link in Rot mit Hover-Dunkelrot */
 body.profile-page p a.remove-friend {
   color: #d62828;
 }
@@ -572,31 +943,59 @@ body.profile-page p a.remove-friend:hover {
   color: #a61b1b;
 }
 
-/* Profil-Container */
+/* Container für Bild + Text nebeneinander */
 .profile-container {
   display: flex;
-  gap: 20px;
-  align-items: flex-start;
   max-width: 800px;
-  margin: 15px auto;
+  margin: 15px ;
+  background: transparent;
+  border: none;
+  gap: 40px;
   box-sizing: border-box;
 }
-.profile-container fieldset {
-  background-color: white;
-  border: 1px solid #ccc;
-  padding: 15px;
-  width: 700px;
+
+/* Linke Spalte mit Profilbild */
+.profile-left {
+  flex: 0 0 auto;
+  margin-left: -50px;
 }
-.profile-container img {
+
+/* Rechte Spalte mit weißem Textkasten */
+.profile-right {
+  flex: 1 1 auto;
+  font-size: 13px;
+  line-height: 1.5;
+  background: #fff;
+  border: 1px dotted #ccc;
+  padding: 15px;
+  box-sizing: border-box;
+}
+
+/* Profilbildgröße und Gestaltung */
+.profile-pic {
+  width: 300px;
+  height: 300px;
+  background-color: #007bff;
+  border-radius: 3px;
+  padding: 5px;
+  object-fit: contain;
+}
+
+/* Leichte Einrückung der Werte (z. B. „Tea“, „Thomas“) */
+.profile-right p b + br + text,
+.profile-right p b + br + * {
+  margin-left: 20px;
+}
+
+/* Abstände zwischen den Textzeilen */
+.profile-right p b + br {
   display: block;
   margin: 0;
 }
-.profile-info .friend {
-  border: 1px solid black;
-  background-color: white;
-  width: 400px;
-  height: 220px;
-  padding: 5px;
+
+/* Einzelne Informationsblöcke im Profil */
+.profile-right .info-block {
+  margin: 0 0 8px 0;
 }
 .friend label {
   font-weight: bold;
