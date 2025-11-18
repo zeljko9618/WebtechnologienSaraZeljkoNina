@@ -1,38 +1,28 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <title>Chat</title>
-    <link rel="stylesheet" href="./style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat</title>
+  <link rel="stylesheet" href="./style.css">
+  <script src="main.js"></script>
+  <script src="chat.js" defer></script>
 </head>
-
 <body class="chat-page">
-    <h1>Chat with Tom</h1>
+  <h1></h1>
 
-    <p>
-        <a href="#" class="friendslist">&lt;Back</a> |
-        <a href="profile.html" class="profile">Profile</a> |
-        <a href="#" class="remove-friend">Remove Friend</a>
-    </p>
+  <p>
+    <a href="#" class="friendslist">&lt;Back</a> |
+    <a href="profile.html" class="profile">Profile</a> |
+    <a href="#" class="remove-friend">Remove Friend</a>
+  </p>
 
-    <div class="chat-box">
-        <div class="message">
-            <span class="sender">Tom:</span>
-            <span class="text">Hallo, Welt!</span>
-            <span class="time">19:43:01</span>
-        </div>
-        <div class="message">
-            <span class="sender">Jerry:</span>
-            <span class="text">Wie gehts?</span>
-            <span class="time">19:57:20</span>
-        </div>
-    </div>
+  <!-- Chatbox startet leer -->
+  <div class="chat-box"></div>
 
-    <div class="chat-input">
-        <input type="text" name="newmessage" placeholder="New Message">
-        <button type="button">Send</button>
-    </div>
+  <div class="chat-input">
+    <input type="text" name="newmessage" placeholder="New Message">
+    <button type="button">Send</button>
+  </div>
 </body>
-
 </html>
