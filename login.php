@@ -11,7 +11,7 @@
 
   <h1>Please sign in</h1>
 
-  <form action="friends.html" method="post">
+  <form action="friends.php" method="post">
     <div class="login">
       <fieldset>
         <legend>Login</legend>
@@ -25,7 +25,7 @@
     </div>
 
     <div class="buttons">
-      <button class="gray" type="submit" formaction="register.html" formmethod="get">Register</button>
+      <button class="gray" type="submit" formaction="register.php" formmethod="get">Register</button>
       <button class="blue" type="submit" value="Login">Login</button>
     </div>
   </form>

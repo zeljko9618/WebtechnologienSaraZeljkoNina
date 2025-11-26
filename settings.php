@@ -47,7 +47,7 @@
 
       <!-- Buttons unten zentriert -->
       <div class="buttons">
-        <button type="button" class="gray" onclick="window.location.href='friends.html'">Cancel</button>
+        <button type="button" class="gray" onclick="window.location.href='friends.php'">Cancel</button>
         <button type="submit" class="blue">Save</button>
       </div>
     </form>

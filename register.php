@@ -32,7 +32,7 @@
     </div>
 
     <div class="buttons">
-      <button class="gray" type="button" onclick="window.location.href='friends.html'">Cancel</button>
+      <button class="gray" type="button" onclick="window.location.href='friends.php'">Cancel</button>
       <button class="blue" type="submit">Create Account</button>
     </div>
 

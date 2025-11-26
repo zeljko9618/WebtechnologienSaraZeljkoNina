@@ -13,7 +13,7 @@
 
   <p>
     <a href="#" class="friendslist">&lt;Back</a> |
-    <a href="profile.html" class="profile">Profile</a> |
+    <a href="profile.php" class="profile">Profile</a> |
     <a href="#" class="remove-friend">Remove Friend</a>
   </p>
 

@@ -14,7 +14,7 @@
 
     <p class="bye-text">See u!</p>
 
-    <p><a href="login.html" class="login-link">Login again</a></p>
+    <p><a href="login.php" class="login-link">Login again</a></p>
   </div>
 </body>
 </html>

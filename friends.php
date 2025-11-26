@@ -13,8 +13,8 @@
   <h1>Friends</h1>
 
   <p>
-    <a href="logout.html">&lt;Logout</a> |
-    <a href="settings.html">Settings</a>
+    <a href="logout.php">&lt;Logout</a> |
+    <a href="settings.php">Settings</a>
   </p>
 
   <ul id="friend-list">
@@ -30,7 +30,7 @@
 
   <hr>
 
-  <form action="friends.html" method="post">
+  <form action="friends.php" method="post">
     <input type="text" 
            id="friend-request-name" 
            name="friendRequestName" 
