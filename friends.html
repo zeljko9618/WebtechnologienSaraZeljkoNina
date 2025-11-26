@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html> 
 
 <head>
   <meta charset="UTF-8">
   <title>Friends</title>
   <link rel="stylesheet" href="./style.css">
+  <script src="script.js" defer></script>
 </head>
 
-<body>
-
-  <body class="friends-page"></body>
+<body class="friends-page">
+  
   <h1>Friends</h1>
 
   <p>
@@ -17,29 +17,33 @@
     <a href="settings.html">Settings</a>
   </p>
 
-  <ul>
-    <li>Tom <span>3</span></li>
-    <li>Marvin <span>1</span></li>
-    <li>Tick</li>
-    <li>Trick</li>
+  <ul id="friend-list">
+    <!-- wird durch JS befüllt-->
   </ul>
 
   <hr>
 
   <h2>New Requests</h2>
-  <ol>
-    <li>Friend request from <b>Track</b>
-      <button type="button" value="Accept">Accept</button>
-      <button type="button" value="Reject">Reject</button>
-    </li>
+  <ol id="request-list">
+    <!-- wird durch JS befüllt-->
   </ol>
 
   <hr>
 
   <form action="friends.html" method="post">
-    <input type="text" id="newfriend" name="newfriend" placeholder="Add Friend to List">
-    <button type="button" value="Add">Add</button>
+    <input type="text" 
+           id="friend-request-name" 
+           name="friendRequestName" 
+           placeholder="Add Friend to List"
+           list="friend-selector">
+
+    <datalist id="friend-selector">
+      <!-- wird durch JS befüllt -->
+    </datalist>
+    
+    <button type="button" id="add-friend-btn">Add</button>
   </form>
+
 </body>
 
 </html>
