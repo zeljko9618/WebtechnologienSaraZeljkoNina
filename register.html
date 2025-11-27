@@ -38,6 +38,7 @@
 
   </form>
 
+  <script src="main.js"></script>
   <script src="register.js"></script>
 </body>
 </html>

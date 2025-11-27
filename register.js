@@ -1,108 +1,119 @@
-// === BACKEND KONFIGURATION ===
-const backendUrl = "https://online-lectures-cs.thi.de/chat/90da5892-9ea4-43b8-814f-cc7f064555f1";
+function markValid(input) {
+    input.classList.remove("invalid");
+    input.classList.add("valid");
+}
 
-// === FORM ELEMENTE ===
+function markInvalid(input) {
+    input.classList.remove("valid");
+    input.classList.add("invalid");
+}
+
+// Elemente holen
 const form = document.getElementById("registerForm");
-const username = document.getElementById("username");
-const password = document.getElementById("password");
-const passwordRepeat = document.getElementById("passwordRepeat");
+const usernameInput = document.getElementById("username");
+const passwordInput = document.getElementById("password");
+const confirmInput  = document.getElementById("passwordRepeat");
 
-// === TEXT-ERROR FUNKTIONEN ===
-function showError(id, message) {
-  document.getElementById(id).innerText = message;
-}
+const usernameError = document.getElementById("usernameError");
+const passwordError = document.getElementById("passwordError");
+const confirmError  = document.getElementById("passwordRepeatError");
 
-function clearError(id) {
-  document.getElementById(id).innerText = "";
-}
+// -------------------------------
+// LIVE VALIDATION FUNCTIONS
+// -------------------------------
+function validateUsername() {
+    const username = usernameInput.value.trim();
 
-// === CSS-KLASSENWECHSEL ===
-function setValid(input) {
-  input.classList.remove("invalid");
-  input.classList.add("valid");
-}
-
-function setInvalid(input) {
-  input.classList.remove("valid");
-  input.classList.add("invalid");
-}
-
-// === SERVERPRÜFUNG: USER EXISTIERT? ===
-async function userExists(name) {
-  if (!name || name.trim() === "") return false;
-
-  const url = `${backendUrl}/user/${encodeURIComponent(name)}`;
-
-  try {
-    const response = await fetch(url);
-
-    if (response.status === 204) {
-      return true; // existiert
+    if (username.length < 3) {
+        markInvalid(usernameInput);
+        usernameError.textContent = "Username muss mindestens 3 Zeichen haben.";
+        return false;
     }
 
-    if (response.status === 404) {
-      return false; // frei
-    }
-
-    console.error("Serverfehler:", response.status);
-    return false;
-  } catch (err) {
-    console.error("Netzwerkfehler:", err);
-    return false;
-  }
+    markValid(usernameInput);
+    usernameError.textContent = "";
+    return true;
 }
 
-// === VALIDIERUNG BEIM ABSENDEN ===
-form.addEventListener("submit", async function (event) {
-  event.preventDefault(); // erst stoppen — AJAX kommt später
+function validatePassword() {
+    const pw = passwordInput.value;
 
-  let hasError = false;
-  const nameValue = username.value.trim();
+    if (pw.length < 8) {
+        markInvalid(passwordInput);
+        passwordError.textContent = "Passwort muss mindestens 8 Zeichen haben.";
+        return false;
+    }
 
-  // Username Länge prüfen
-  if (nameValue.length < 3) {
-    setInvalid(username);
-    showError("usernameError", "Username must have at least 3 characters.");
-    hasError = true;
-  } else {
-    setValid(username);
-    clearError("usernameError");
-  }
+    markValid(passwordInput);
+    passwordError.textContent = "";
+    return true;
+}
 
-  // Username bereits vergeben?
-  const exists = await userExists(nameValue);
-  if (exists) {
-    setInvalid(username);
-    showError("usernameError", "Username is already taken.");
-    hasError = true;
-  } else if (nameValue.length >= 3) {
-    setValid(username);
-    clearError("usernameError");
-  }
+function validateConfirmPassword() {
+    const pw = passwordInput.value;
+    const confirm = confirmInput.value;
 
-  // Passwort Länge
-  if (password.value.length < 8) {
-    setInvalid(password);
-    showError("passwordError", "Password must have at least 8 characters.");
-    hasError = true;
-  } else {
-    setValid(password);
-    clearError("passwordError");
-  }
+    if (pw !== confirm || confirm === "") {
+        markInvalid(confirmInput);
+        confirmError.textContent = "Passwörter stimmen nicht überein.";
+        return false;
+    }
 
-  // Passwort-Wiederholung
-  if (password.value !== passwordRepeat.value || passwordRepeat.value === "") {
-    setInvalid(passwordRepeat);
-    showError("passwordRepeatError", "Passwords do not match.");
-    hasError = true;
-  } else {
-    setValid(passwordRepeat);
-    clearError("passwordRepeatError");
-  }
+    markValid(confirmInput);
+    confirmError.textContent = "";
+    return true;
+}
 
-  // Wenn Fehler → Formular NICHT absenden
-  if (hasError) return;
+// -------------------------------
+// LIVE EVENT LISTENERS
+// -------------------------------
+usernameInput.addEventListener("input", validateUsername);
+passwordInput.addEventListener("input", () => {
+    validatePassword();
+    validateConfirmPassword();
+});
+confirmInput.addEventListener("input", validateConfirmPassword);
 
-  // Wenn keine Fehler → absenden (submit manuell)
-  form.submit();
+// -------------------------------
+// SUBMIT EVENT (inkl. API Check)
+// -------------------------------
+form.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    const uOK = validateUsername();
+    const pOK = validatePassword();
+    const cOK = validateConfirmPassword();
+
+    if (!uOK || !pOK || !cOK) return;
+
+    // USERNAME VIA API CHECKEN
+    const username = usernameInput.value.trim();
+    const xhr = new XMLHttpRequest();
+
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+            // USER EXISTIERT SCHON
+            if (xhr.status === 204) {
+                markInvalid(usernameInput);
+                usernameError.textContent = "Username existiert bereits.";
+                return;
+            }
+
+            // USER EXISTIERT NICHT
+            if (xhr.status === 404) {
+                markValid(usernameInput);
+                usernameError.textContent = "";
+
+                alert("Account erfolgreich erstellt!");
+                window.location.href = "friends.html";
+                return;
+            }
+
+            alert("Fehler beim Überprüfen des Usernames!");
+        }
+    };
+
+    xhr.open("GET", window.backendUrl + "/user/" + encodeURIComponent(username), true);
+    xhr.setRequestHeader("Authorization", "Bearer " + window.token);
+    xhr.send();
 });
