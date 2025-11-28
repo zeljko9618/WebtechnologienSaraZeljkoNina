@@ -12,7 +12,7 @@
   <h1></h1>
 
   <p>
-    <a href="#" class="friendslist">&lt;Back</a> |
+    <a href="friends.php" class="friendslist">&lt;Back</a> |
     <a href="profile.php" class="profile">Profile</a> |
     <a href="#" class="remove-friend">Remove Friend</a>
   </p>

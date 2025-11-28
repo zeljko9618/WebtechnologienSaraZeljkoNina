@@ -1,108 +1,116 @@
-// === BACKEND KONFIGURATION ===
-const backendUrl = "https://online-lectures-cs.thi.de/chat/90da5892-9ea4-43b8-814f-cc7f064555f1";
+document.addEventListener("DOMContentLoaded", () => {
 
-// === FORM ELEMENTE ===
-const form = document.getElementById("registerForm");
-const username = document.getElementById("username");
-const password = document.getElementById("password");
-const passwordRepeat = document.getElementById("passwordRepeat");
-
-// === TEXT-ERROR FUNKTIONEN ===
-function showError(id, message) {
-  document.getElementById(id).innerText = message;
-}
-
-function clearError(id) {
-  document.getElementById(id).innerText = "";
-}
-
-// === CSS-KLASSENWECHSEL ===
-function setValid(input) {
-  input.classList.remove("invalid");
-  input.classList.add("valid");
-}
-
-function setInvalid(input) {
-  input.classList.remove("valid");
-  input.classList.add("invalid");
-}
-
-// === SERVERPRÜFUNG: USER EXISTIERT? ===
-async function userExists(name) {
-  if (!name || name.trim() === "") return false;
-
-  const url = `${backendUrl}/user/${encodeURIComponent(name)}`;
-
-  try {
-    const response = await fetch(url);
-
-    if (response.status === 204) {
-      return true; // existiert
+    function markValid(input) {
+        input.classList.remove("invalid");
+        input.classList.add("valid");
     }
 
-    if (response.status === 404) {
-      return false; // frei
+    function markInvalid(input) {
+        input.classList.remove("valid");
+        input.classList.add("invalid");
     }
 
-    console.error("Serverfehler:", response.status);
-    return false;
-  } catch (err) {
-    console.error("Netzwerkfehler:", err);
-    return false;
-  }
-}
+    const form = document.getElementById("registerForm");
+    const usernameInput = document.getElementById("username");
+    const passwordInput = document.getElementById("password");
+    const confirmInput = document.getElementById("passwordRepeat");
 
-// === VALIDIERUNG BEIM ABSENDEN ===
-form.addEventListener("submit", async function (event) {
-  event.preventDefault(); // erst stoppen — AJAX kommt später
+    const usernameError = document.getElementById("usernameError");
+    const passwordError = document.getElementById("passwordError");
+    const confirmError = document.getElementById("passwordRepeatError");
 
-  let hasError = false;
-  const nameValue = username.value.trim();
+    // --- VALIDATION ---
+    function validateUsername() {
+        const name = usernameInput.value.trim();
+        if (name.length < 3) {
+            markInvalid(usernameInput);
+            usernameError.textContent = "Username muss mindestens 3 Zeichen haben.";
+            return false;
+        }
+        markValid(usernameInput);
+        usernameError.textContent = "";
+        return true;
+    }
 
-  // Username Länge prüfen
-  if (nameValue.length < 3) {
-    setInvalid(username);
-    showError("usernameError", "Username must have at least 3 characters.");
-    hasError = true;
-  } else {
-    setValid(username);
-    clearError("usernameError");
-  }
+    function validatePassword() {
+        const pw = passwordInput.value;
+        if (pw.length < 8) {
+            markInvalid(passwordInput);
+            passwordError.textContent = "Passwort muss mindestens 8 Zeichen haben.";
+            return false;
+        }
+        markValid(passwordInput);
+        passwordError.textContent = "";
+        return true;
+    }
 
-  // Username bereits vergeben?
-  const exists = await userExists(nameValue);
-  if (exists) {
-    setInvalid(username);
-    showError("usernameError", "Username is already taken.");
-    hasError = true;
-  } else if (nameValue.length >= 3) {
-    setValid(username);
-    clearError("usernameError");
-  }
+    function validateConfirm() {
+        const pw = passwordInput.value;
+        const conf = confirmInput.value;
 
-  // Passwort Länge
-  if (password.value.length < 8) {
-    setInvalid(password);
-    showError("passwordError", "Password must have at least 8 characters.");
-    hasError = true;
-  } else {
-    setValid(password);
-    clearError("passwordError");
-  }
+        if (pw !== conf || conf === "") {
+            markInvalid(confirmInput);
+            confirmError.textContent = "Passwörter stimmen nicht überein.";
+            return false;
+        }
+        markValid(confirmInput);
+        confirmError.textContent = "";
+        return true;
+    }
 
-  // Passwort-Wiederholung
-  if (password.value !== passwordRepeat.value || passwordRepeat.value === "") {
-    setInvalid(passwordRepeat);
-    showError("passwordRepeatError", "Passwords do not match.");
-    hasError = true;
-  } else {
-    setValid(passwordRepeat);
-    clearError("passwordRepeatError");
-  }
+    // LIVE VALIDATION
+    usernameInput.addEventListener("input", validateUsername);
+    passwordInput.addEventListener("input", () => {
+        validatePassword();
+        validateConfirm();
+    });
+    confirmInput.addEventListener("input", validateConfirm);
 
-  // Wenn Fehler → Formular NICHT absenden
-  if (hasError) return;
+    // --- SUBMIT ---
+    form.addEventListener("submit", (e) => {
+        e.preventDefault();
 
-  // Wenn keine Fehler → absenden (submit manuell)
-  form.submit();
+        const uOK = validateUsername();
+        const pOK = validatePassword();
+        const cOK = validateConfirm();
+
+        if (!uOK || !pOK || !cOK) return;
+
+        // USERNAME EXISTS?
+        const username = usernameInput.value.trim();
+        const xhr = new XMLHttpRequest();
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                
+                console.log("STATUS:", xhr.status, "RESPONSE:", xhr.responseText);
+
+                // EXISTIERT → ERROR
+                if (xhr.status === 204) {
+                    markInvalid(usernameInput);
+                    usernameError.textContent = "Username existiert bereits.";
+                    return;
+                }
+
+                // EXISTIERT NICHT → WEITERLEITEN
+                if (xhr.status === 404) {
+                    markValid(usernameInput);
+                    usernameError.textContent = "";
+
+                    window.location.href = "friends.html";   // <<--- DAS HIER IST DIE ANFORDERUNG
+                    return;
+                }
+
+                if (xhr.status === 200) {
+                    window.location.href = "friends.html";   // <<--- DAS HIER IST DIE ANFORDERUNG
+                    return;
+                }
+            }
+        };
+
+        xhr.open("GET", window.backendUrl + "/user/" + encodeURIComponent(username), true);
+        xhr.setRequestHeader("Authorization", "Bearer " + window.token);
+        xhr.send();
+    });
+
 });

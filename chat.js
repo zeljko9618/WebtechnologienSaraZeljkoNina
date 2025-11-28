@@ -1,85 +1,144 @@
-// Read out the chatpartner from the URL
-function getChatPartner() {
-  const url = new URL(window.location.href);
-  const queryParams = url.searchParams;
-  const friendValue = queryParams.get("friend");
-  return friendValue;
+// -----------------------------
+// CHAT HEADER
+// -----------------------------
+function getChatpartner() {
+    const url = new URL(window.location.href);
+    return url.searchParams.get("friend");
 }
 
-// Set Title
-const friend = getChatPartner();
-document.querySelector("h1").innerText = "Chat with " + friend;
+document.addEventListener("DOMContentLoaded", () => {
+    const chatHeader = document.querySelector("body.chat-page h1");
+    if (chatHeader) {
+        chatHeader.textContent = "Chat with " + getChatpartner();
+    }
+});
 
-// Load messages
+// -----------------------------
+// ELEMENTE AUS DEM HTML
+// -----------------------------
+
+const sendBtn = document.querySelector(".chat-input button");
+
+const msgInput = document.querySelector(".chat-input input");
+
+const messageList = document.querySelector(".chat-box");
+
+const friend = getChatpartner();
+
+
+// -----------------------------
+// SENDEN MIT ENTER
+// -----------------------------
+msgInput.addEventListener("keypress", function (event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        const msg = msgInput.value.trim();
+        if (msg !== "") {
+            sendMessage(msg, friend);
+            msgInput.value = "";
+        }
+    }
+});
+
+// -----------------------------
+// SEND-BUTTON
+// -----------------------------
+sendBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    const msg = msgInput.value.trim();
+    if (msg !== "") {
+        sendMessage(msg, friend);
+        msgInput.value = "";
+    }
+});
+
+// -----------------------------
+// SEND MESSAGE
+// -----------------------------
+function sendMessage(message, receiver) {
+    let xhr = new XMLHttpRequest();
+
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 204) {
+            loadMessages();
+        }
+    };
+
+    xhr.open("POST", window.backendUrl + "/message", true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.setRequestHeader("Authorization", "Bearer " + window.token);
+
+    const payload = JSON.stringify({ message, to: receiver });
+    xhr.send(payload);
+}
+
+
+// -----------------------------
+// NACHRICHTEN LADEN
+// -----------------------------
+function renderMessages(data) {
+    messageList.innerHTML = "";
+
+    data.forEach(d => {
+        const name = d.from;
+        const msg = d.msg;
+        const time = new Date(d.time).toLocaleTimeString('de-DE', {
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false
+        });
+
+        // EXAKTES HTML, DAS DEIN CSS ERWARTET:
+        const wrapper = document.createElement("div");
+        wrapper.className = "message";
+
+        const senderSpan = document.createElement("span");
+        senderSpan.className = "sender";
+        senderSpan.textContent = name;
+
+        const textSpan = document.createElement("span");
+        textSpan.className = "text";
+        textSpan.textContent = msg;
+
+        const timeSpan = document.createElement("span");
+        timeSpan.className = "time";
+        timeSpan.textContent = time;
+
+        // Reihenfolge wie im CSS vorgesehen
+        wrapper.appendChild(senderSpan);
+        wrapper.appendChild(textSpan);
+        wrapper.appendChild(timeSpan);
+
+        messageList.appendChild(wrapper);
+    });
+}
+
+
 function loadMessages() {
-  const xmlhttp = new XMLHttpRequest();
-  xmlhttp.onreadystatechange = function () {
-    if (xmlhttp.readyState == 4) {
-      if (xmlhttp.status == 200) {
-        const messages = JSON.parse(xmlhttp.responseText);
-        displayMessages(messages);
-      } else {
-        console.error("Error while loading:", xmlhttp.status);
-      }
-    }
-  };
+    const xhr = new XMLHttpRequest();
 
-  xmlhttp.open("GET", `${backendUrl}/message/${friend}`, true);
-  xmlhttp.setRequestHeader("Authorization", "Bearer " + token);
-  xmlhttp.send();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                const data = JSON.parse(xhr.responseText);
+                renderMessages(data);
+            } else {
+                console.error("Fehler beim Laden der Nachrichten:", xhr.status);
+            }
+        }
+    };
+
+    xhr.open("GET", window.backendUrl + "/message/" + encodeURIComponent(friend), true);
+    xhr.setRequestHeader("Authorization", "Bearer " + window.token);
+    xhr.send();
 }
 
-// Display messages in DOM
-function displayMessages(messages) {
-  const box = document.querySelector(".chat-box");
-  box.innerHTML = ""; // delete old messages
 
-  messages.forEach(msg => {
-    const div = document.createElement("div");
-    div.classList.add("message");
-
-    div.innerHTML = `
-      <span class="sender">${msg.from}:</span>
-      <span class="text">${msg.msg}</span>
-      <span class="time">${new Date(msg.time * 1000).toLocaleTimeString()}</span>
-    `;
-
-    box.appendChild(div);
-  });
-
-  // Scroll ans Ende
-  box.scrollTop = box.scrollHeight;
-}
-
-// Send message
-function sendMessage() {
-  const input = document.querySelector("input[name='newmessage']");
-  const messageText = input.value.trim();
-  if (!messageText) return;
-
-  const xmlhttp = new XMLHttpRequest();
-  xmlhttp.onreadystatechange = function () {
-    if (xmlhttp.readyState == 4) {
-      if (xmlhttp.status == 204) {
-        input.value = ""; // clear input
-        loadMessages();   // reload immediately
-      } else {
-        console.error("Error sending message:", xmlhttp.status);
-      }
-    }
-  };
-
-  xmlhttp.open("POST", `${backendUrl}/message`, true);
-  xmlhttp.setRequestHeader("Content-Type", "application/json");
-  xmlhttp.setRequestHeader("Authorization", "Bearer " + token);
-
-  const data = { message: messageText, to: friend };
-  xmlhttp.send(JSON.stringify(data));
-}
-
-// Bind button click
-document.querySelector(".chat-input button").addEventListener("click", sendMessage);
-
-// Update every second
-loadMessages();
+// -----------------------------
+// AUTO-REFRESH
+// -----------------------------
 setInterval(loadMessages, 1000);
+
+// Initial load
+loadMessages();

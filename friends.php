@@ -5,7 +5,8 @@
   <meta charset="UTF-8">
   <title>Friends</title>
   <link rel="stylesheet" href="./style.css">
-  <script src="script.js" defer></script>
+  <script src="main.js" defer></script>
+  <script src="friends.js" defer></script>
 </head>
 
 <body class="friends-page">
