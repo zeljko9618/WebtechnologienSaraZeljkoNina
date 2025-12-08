@@ -11,106 +11,109 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const form = document.getElementById("registerForm");
+
     const usernameInput = document.getElementById("username");
     const passwordInput = document.getElementById("password");
-    const confirmInput = document.getElementById("passwordRepeat");
+    const confirmInput  = document.getElementById("passwordRepeat");
 
     const usernameError = document.getElementById("usernameError");
     const passwordError = document.getElementById("passwordError");
-    const confirmError = document.getElementById("passwordRepeatError");
+    const confirmError  = document.getElementById("passwordRepeatError");
 
-    // --- VALIDATION ---
-    function validateUsername() {
+    // ---------------------------
+    //  USERNAME VALIDATION LIVE
+    // ---------------------------
+    function checkUsername() {
         const name = usernameInput.value.trim();
+
         if (name.length < 3) {
             markInvalid(usernameInput);
-            usernameError.textContent = "Username muss mindestens 3 Zeichen haben.";
+            usernameError.textContent = "Username must have at least 3 characters.";
             return false;
         }
-        markValid(usernameInput);
-        usernameError.textContent = "";
+
+        // AJAX check: does user exist?
+        const xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+
+                // 204 = user exists
+                if (xhr.status === 204) {
+                    markInvalid(usernameInput);
+                    usernameError.textContent = "Username already exists.";
+                }
+
+                // 404 = user does NOT exist → valid
+                else if (xhr.status === 404) {
+                    markValid(usernameInput);
+                    usernameError.textContent = "";
+                }
+            }
+        };
+
+        xhr.open("GET", "ajax_check_user.php?user=" + encodeURIComponent(name), true);
+        xhr.send();
+
         return true;
     }
 
-    function validatePassword() {
+    usernameInput.addEventListener("input", checkUsername);
+
+    // ---------------------------
+    //  PASSWORD VALIDATION
+    // ---------------------------
+    function checkPassword() {
         const pw = passwordInput.value;
+
         if (pw.length < 8) {
             markInvalid(passwordInput);
-            passwordError.textContent = "Passwort muss mindestens 8 Zeichen haben.";
+            passwordError.textContent = "Password must have at least 8 characters.";
             return false;
         }
+
         markValid(passwordInput);
         passwordError.textContent = "";
         return true;
     }
 
-    function validateConfirm() {
+    function checkConfirm() {
         const pw = passwordInput.value;
-        const conf = confirmInput.value;
+        const pw2 = confirmInput.value;
 
-        if (pw !== conf || conf === "") {
+        if (pw2 === "" || pw !== pw2) {
             markInvalid(confirmInput);
-            confirmError.textContent = "Passwörter stimmen nicht überein.";
+            confirmError.textContent = "Passwords do not match.";
             return false;
         }
+
         markValid(confirmInput);
         confirmError.textContent = "";
         return true;
     }
 
-    // LIVE VALIDATION
-    usernameInput.addEventListener("input", validateUsername);
     passwordInput.addEventListener("input", () => {
-        validatePassword();
-        validateConfirm();
+        checkPassword();
+        checkConfirm();
     });
-    confirmInput.addEventListener("input", validateConfirm);
 
-    // --- SUBMIT ---
+    confirmInput.addEventListener("input", checkConfirm);
+
+    // ---------------------------
+    //  SUBMIT VALIDATION
+    // ---------------------------
     form.addEventListener("submit", (e) => {
-        e.preventDefault();
 
-        const uOK = validateUsername();
-        const pOK = validatePassword();
-        const cOK = validateConfirm();
+        let okUser = checkUsername();
+        let okPw   = checkPassword();
+        let okConf = checkConfirm();
 
-        if (!uOK || !pOK || !cOK) return;
+        // Wenn ein Fehler → Formular NICHT absenden
+        if (!okUser || !okPw || !okConf) {
+            e.preventDefault();
+            return;
+        }
 
-        // USERNAME EXISTS?
-        const username = usernameInput.value.trim();
-        const xhr = new XMLHttpRequest();
-
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4) {
-                
-                console.log("STATUS:", xhr.status, "RESPONSE:", xhr.responseText);
-
-                // EXISTIERT → ERROR
-                if (xhr.status === 204) {
-                    markInvalid(usernameInput);
-                    usernameError.textContent = "Username existiert bereits.";
-                    return;
-                }
-
-                // EXISTIERT NICHT → WEITERLEITEN
-                if (xhr.status === 404) {
-                    markValid(usernameInput);
-                    usernameError.textContent = "";
-
-                    window.location.href = "friends.html";   // <<--- DAS HIER IST DIE ANFORDERUNG
-                    return;
-                }
-
-                if (xhr.status === 200) {
-                    window.location.href = "friends.html";   // <<--- DAS HIER IST DIE ANFORDERUNG
-                    return;
-                }
-            }
-        };
-
-        xhr.open("GET", window.backendUrl + "/user/" + encodeURIComponent(username), true);
-        xhr.setRequestHeader("Authorization", "Bearer " + window.token);
-        xhr.send();
+      
     });
 
 });
