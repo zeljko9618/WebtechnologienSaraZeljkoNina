@@ -1,3 +1,10 @@
+<?php
+require("start.php");
+
+// Session bereinigen
+session_unset();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,7 +21,7 @@
 
     <p class="bye-text">See u!</p>
 
-    <p><a href="login.html" class="login-link">Login again</a></p>
+    <p><a href="login.php" class="login-link">Login again</a></p>
   </div>
 </body>
 </html>
