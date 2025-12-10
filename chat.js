@@ -1,5 +1,5 @@
 // -----------------------------
-// CHAT HEADER
+// CHAT HELFER
 // -----------------------------
 function getChatpartner() {
     const url = new URL(window.location.href);
@@ -7,79 +7,89 @@ function getChatpartner() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+    const friend = getChatpartner();
+
+    // Header setzen (falls nötig)
     const chatHeader = document.querySelector("body.chat-page h1");
-    if (chatHeader) {
-        chatHeader.textContent = "Chat with " + getChatpartner();
+    if (chatHeader && friend) {
+        chatHeader.textContent = "Chat with " + friend;
     }
-});
 
-// -----------------------------
-// ELEMENTE AUS DEM HTML
-// -----------------------------
+    // Elemente aus dem HTML
+    const sendBtn = document.querySelector(".chat-input button");
+    const msgInput = document.querySelector(".chat-input input");
+    const messageList = document.querySelector(".chat-box");
 
-// HTML hat KEINE Sonder-IDs → wir greifen über Klassen zu:
-const sendBtn = document.querySelector(".chat-input button");
+    if (!sendBtn || !msgInput || !messageList || !friend) {
+        console.error("Chat-Elemente nicht gefunden – prüfe HTML-Struktur.");
+        return;
+    }
 
-// HTML hat KEIN id="message" → Eingabe ist das .chat-input input:
-const msgInput = document.querySelector(".chat-input input");
+    // -----------------------------
+    // SENDEN MIT ENTER
+    // -----------------------------
+    msgInput.addEventListener("keypress", function (event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            const msg = msgInput.value.trim();
+            if (msg !== "") {
+                sendMessage(msg, friend, messageList);
+                msgInput.value = "";
+            }
+        }
+    });
 
-// Nachrichtenausgabe = .chat-box
-const messageList = document.querySelector(".chat-box");
-
-const friend = getChatpartner();
-
-
-// -----------------------------
-// SENDEN MIT ENTER
-// -----------------------------
-msgInput.addEventListener("keypress", function (event) {
-    if (event.key === "Enter") {
-        event.preventDefault();
+    // -----------------------------
+    // SEND-BUTTON
+    // -----------------------------
+    sendBtn.addEventListener("click", (e) => {
+        e.preventDefault();
         const msg = msgInput.value.trim();
         if (msg !== "") {
-            sendMessage(msg, friend);
+            sendMessage(msg, friend, messageList);
             msgInput.value = "";
         }
+    });
+
+    // -----------------------------
+    // AUTO-REFRESH
+    // -----------------------------
+    function refresh() {
+        loadMessages(friend, messageList);
     }
+
+    setInterval(refresh, 1000);
+    refresh(); // Initial laden
 });
 
 // -----------------------------
-// SEND-BUTTON
+// SEND MESSAGE (über PHP-Proxy)
 // -----------------------------
-sendBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-    const msg = msgInput.value.trim();
-    if (msg !== "") {
-        sendMessage(msg, friend);
-        msgInput.value = "";
-    }
-});
-
-// -----------------------------
-// SEND MESSAGE
-// -----------------------------
-function sendMessage(message, receiver) {
+function sendMessage(message, receiver, messageList) {
     let xhr = new XMLHttpRequest();
 
     xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && xhr.status === 204) {
-            loadMessages();
+        if (xhr.readyState === 4) {
+            if (xhr.status === 204) {
+                // nach erfolgreichem Senden neu laden
+                loadMessages(receiver, messageList);
+            } else {
+                console.error("Fehler beim Senden der Nachricht:", xhr.status, xhr.responseText);
+            }
         }
     };
 
-    xhr.open("POST", window.backendUrl + "/message", true);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.setRequestHeader("Authorization", "Bearer " + window.token);
+    xhr.open("POST", "ajax_send_message.php", true);
+    xhr.setRequestHeader("Content-Type", "application/json");
 
-    const payload = JSON.stringify({ message, to: receiver });
+    const payload = JSON.stringify({ msg: message, to: receiver });
     xhr.send(payload);
 }
 
-
 // -----------------------------
-// NACHRICHTEN LADEN
+// NACHRICHTEN LADEN (über PHP-Proxy)
 // -----------------------------
-function renderMessages(data) {
+function renderMessages(data, messageList) {
     messageList.innerHTML = "";
 
     data.forEach(d => {
@@ -115,31 +125,27 @@ function renderMessages(data) {
     });
 }
 
-
-function loadMessages() {
+function loadMessages(friend, messageList) {
     const xhr = new XMLHttpRequest();
 
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
             if (xhr.status === 200) {
-                const data = JSON.parse(xhr.responseText);
-                renderMessages(data);
+                try {
+                    const data = JSON.parse(xhr.responseText);
+                    renderMessages(data, messageList);
+                } catch (e) {
+                    console.error("Fehler beim Parsen der Nachrichten:", e, xhr.responseText);
+                }
+            } else if (xhr.status === 404) {
+                // keine Nachrichten – einfach leere Liste
+                messageList.innerHTML = "";
             } else {
-                console.error("Fehler beim Laden der Nachrichten:", xhr.status);
+                console.error("Fehler beim Laden der Nachrichten:", xhr.status, xhr.responseText);
             }
         }
     };
 
-    xhr.open("GET", window.backendUrl + "/message/" + encodeURIComponent(friend), true);
-    xhr.setRequestHeader("Authorization", "Bearer " + window.token);
+    xhr.open("GET", "ajax_load_messages.php?to=" + encodeURIComponent(friend), true);
     xhr.send();
 }
-
-
-// -----------------------------
-// AUTO-REFRESH
-// -----------------------------
-setInterval(loadMessages, 1000);
-
-// Initial load
-loadMessages();

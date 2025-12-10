@@ -8,21 +8,21 @@ if (!isset($_SESSION["user"]) || empty($_SESSION["user"])) {
 }
 
 $currentUser = $_SESSION["user"];
-$error = "";  // Fehlermeldung für Add Friend
+$error = "";
 
-// ------------------------------------
-// OPTIONAL: Freund entfernen (GET)
-// ------------------------------------
+// =========================================================
+// 1) REMOVE FRIEND (GET)
+// =========================================================
 if (isset($_GET['action']) && $_GET['action'] === 'remove-friend' && isset($_GET['friend'])) {
     $friendName = $_GET['friend'];
-    $service->friendDismiss($friendName); // gemäß Backend: dismiss = entfernen/ablehnen
+    $service->removeFriend($friendName);   // <<--- WICHTIG: richtige Methode!
     header("Location: friends.php");
     exit;
 }
 
-// ------------------------------------
-// POST-Aktionen
-// ------------------------------------
+// =========================================================
+// 2) POST-Aktionen
+// =========================================================
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $action     = $_POST["action"] ?? "";
@@ -46,31 +46,26 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // ADD FRIEND
     if ($action === "add") {
 
-        // 1. Leer?
         if ($newFriend === "") {
             $error = "Please enter a username.";
         }
-        // 2. Selbst hinzufügen verhindern
         elseif ($newFriend === $currentUser) {
             $error = "You cannot add yourself as a friend.";
         }
-        // 3. Nutzer muss existieren
         elseif (!$service->userExists($newFriend)) {
             $error = "User '$newFriend' does not exist.";
         }
         else {
-            // Anfrage senden
             $service->friendRequest(["username" => $newFriend]);
-
             header("Location: friends.php");
             exit;
         }
     }
 }
 
-// ------------------------------------
-// FRIEND LISTE & ALLE USER LADEN
-// ------------------------------------
+// =========================================================
+// 3) FRIEND LISTE & ALLE USER LADEN
+// =========================================================
 $friends  = $service->loadFriends();
 $allUsers = $service->loadUsers();
 ?>
@@ -116,27 +111,27 @@ $allUsers = $service->loadUsers();
 
     <datalist id="friend-selector">
     <?php
-    if (is_array($allUsers)) {
+        if (is_array($allUsers)) {
 
-        $blocked = [$currentUser];
-        if (is_array($friends)) {
-            foreach ($friends as $fr) {
-                if (is_object($fr) && method_exists($fr, 'getUsername')) {
-                    $blocked[] = $fr->getUsername();
+            $blocked = [$currentUser];
+            if (is_array($friends)) {
+                foreach ($friends as $fr) {
+                    if ($fr instanceof Model\Friend) {
+                        $blocked[] = $fr->getUsername();
+                    }
                 }
             }
-        }
 
-        foreach ($allUsers as $name) {
-            if (!is_string($name)) continue;
-            if (trim($name) === "") continue;
-            if (is_numeric($name)) continue;
-            if ($name === "undefined" || $name === "null") continue;
-            if (in_array($name, $blocked)) continue;
-
-            echo "<option value='" . htmlspecialchars($name) . "'>";
+            foreach ($allUsers as $name) {
+                if (!is_string($name)) continue;
+                if (trim($name) === "") continue;
+                if (is_numeric($name)) continue;
+                if ($name === "undefined" || $name === "null") continue;
+                if (in_array($name, $blocked)) continue;
+                
+                echo "<option value='" . htmlspecialchars($name) . "'>";
+            }
         }
-    }
     ?>
     </datalist>
 
