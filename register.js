@@ -42,7 +42,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     markInvalid(usernameInput);
                     usernameError.textContent = "Username already exists.";
                 }
-
                 // 404 = user does NOT exist → valid
                 else if (xhr.status === 404) {
                     markValid(usernameInput);
@@ -113,7 +112,7 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-      
+        // Server übernimmt die Registrierung
     });
 
 });

@@ -3,41 +3,84 @@ namespace Model;
 
 use JsonSerializable;
 
-class User implements JsonSerializable
-{
-    // Attribute
+class User implements JsonSerializable {
     private $username;
-    // Nina hier ergänzst du weitere Attribute in Teilaufgabe i und j
-    // z.B. $fullname, $gender, $history usw
+    private $firstName;
+    private $lastName;
+    private $coffeOrTea;
+    private $description;
+    private $history;
 
-    // Konstruktor
-    public function __construct($username = null)
-    {
+    public function __construct($username = null) {
         $this->username = $username;
+        $this->firstName = null;
+        $this->lastName = null;
+        $this->coffeOrTea = null;
+        $this->description = null;
+        $this->history = array();
     }
 
     // Getter
-    public function getUsername()
-    {
+    public function getUsername() {
         return $this->username;
     }
 
-    // JSON-Serialisierung
-    public function jsonSerialize(): mixed
-    {
-        // Alle Objekt-Attribute als Array zurückgeben
+    public function getFirstName() {
+        return $this->firstName;
+    }
+
+    public function getLastName() {
+        return $this->lastName;
+    }
+
+    public function getCoffeOrTea() {
+        return $this->coffeOrTea;
+    }
+
+    public function getDescription() {
+        return $this->description;
+    }
+
+    public function getHistory() {
+        return $this->history;
+    }
+
+    // Setter
+    public function setUsername($username) {
+        $this->username = $username;
+    }
+
+    public function setFirstName($firstName) {
+        $this->firstName = $firstName;
+    }
+
+    public function setLastName($lastName) {
+        $this->lastName = $lastName;
+    }
+
+    public function setCoffeOrTea($coffeOrTea) {
+        $this->coffeOrTea = $coffeOrTea;
+    }
+
+    public function setDescription($description) {
+        $this->description = $description;
+    }
+
+    public function setHistory($history) {
+        $this->history = $history;
+    }
+
+    // JSON Serialization
+    public function jsonSerialize(): mixed {
         return get_object_vars($this);
     }
 
-    // Von JSON nach User-Objekt
-    public static function fromJson($data): User
-    {
+    // JSON Deserialization
+    public static function fromJson($data) {
         $user = new User();
-
         foreach ($data as $key => $value) {
             $user->{$key} = $value;
         }
-
         return $user;
     }
 }

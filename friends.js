@@ -8,17 +8,17 @@ document.addEventListener("DOMContentLoaded", function () {
         xhr.onreadystatechange = function () {
 
             if (xhr.readyState === 4) {
-    if (xhr.status === 200) {
-        const friends = JSON.parse(xhr.responseText);
+                if (xhr.status === 200) {
+                    const friends = JSON.parse(xhr.responseText);
 
-        console.log("DEBUG → Friend-Daten vom Server:");
-        console.log(friends);  // ← HIER kommt es rein!
+                    console.log("DEBUG → Friend-Daten vom Server:");
+                    console.log(friends);
 
-        renderFriends(friends);
-    } else {
-        console.error("Fehler beim Laden:", xhr.status, xhr.responseText);
-    }
-}
+                    renderFriends(friends);
+                } else {
+                    console.error("Fehler beim Laden:", xhr.status, xhr.responseText);
+                }
+            }
 
         };
 
@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             if (f.status === "accepted") {
                 const li = document.createElement("li");
-                const a = document.createElement("a");
+                const a  = document.createElement("a");
 
                 a.href = "chat.php?friend=" + encodeURIComponent(f.username);
                 a.textContent = f.username;

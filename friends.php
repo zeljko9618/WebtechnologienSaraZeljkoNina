@@ -10,9 +10,19 @@ if (!isset($_SESSION["user"]) || empty($_SESSION["user"])) {
 $currentUser = $_SESSION["user"];
 $error = "";  // Fehlermeldung für Add Friend
 
-// -------------------------
-// POST-Aktionen verarbeiten
-// -------------------------
+// ------------------------------------
+// OPTIONAL: Freund entfernen (GET)
+// ------------------------------------
+if (isset($_GET['action']) && $_GET['action'] === 'remove-friend' && isset($_GET['friend'])) {
+    $friendName = $_GET['friend'];
+    $service->friendDismiss($friendName); // gemäß Backend: dismiss = entfernen/ablehnen
+    header("Location: friends.php");
+    exit;
+}
+
+// ------------------------------------
+// POST-Aktionen
+// ------------------------------------
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $action     = $_POST["action"] ?? "";
@@ -33,14 +43,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         exit;
     }
 
-    // ADD FRIEND (friend request senden)
+    // ADD FRIEND
     if ($action === "add") {
 
         // 1. Leer?
         if ($newFriend === "") {
             $error = "Please enter a username.";
         }
-        // 2. Selbst hinzufügen verbieten
+        // 2. Selbst hinzufügen verhindern
         elseif ($newFriend === $currentUser) {
             $error = "You cannot add yourself as a friend.";
         }
@@ -49,21 +59,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $error = "User '$newFriend' does not exist.";
         }
         else {
-            // Alles OK → Anfrage senden
+            // Anfrage senden
             $service->friendRequest(["username" => $newFriend]);
 
-            // Redirect nach Erfolg
             header("Location: friends.php");
             exit;
         }
     }
 }
 
-// -------------------------
+// ------------------------------------
 // FRIEND LISTE & ALLE USER LADEN
-// -------------------------
-$friends  = $service->loadFriends();  // Array von Friend-Objekten oder stdClass
-$allUsers = $service->loadUsers();    // Array von Strings (Usernames)
+// ------------------------------------
+$friends  = $service->loadFriends();
+$allUsers = $service->loadUsers();
 ?>
 <!DOCTYPE html>
 <html>
@@ -109,43 +118,27 @@ $allUsers = $service->loadUsers();    // Array von Strings (Usernames)
     <?php
     if (is_array($allUsers)) {
 
-        // Blockiert: du selbst + deine Freunde
         $blocked = [$currentUser];
-
         if (is_array($friends)) {
             foreach ($friends as $fr) {
-
                 if (is_object($fr) && method_exists($fr, 'getUsername')) {
                     $blocked[] = $fr->getUsername();
-                } elseif (is_string($fr)) {
-                    $blocked[] = $fr;
                 }
             }
         }
 
-        // NUR echte Strings anzeigen
         foreach ($allUsers as $name) {
-
-            // 1️⃣ skip null, empty, whitespace
             if (!is_string($name)) continue;
             if (trim($name) === "") continue;
-
-            // 2️⃣ skip numerische Schlüssel / IDs
             if (is_numeric($name)) continue;
-
-            // 3️⃣ skip „undefined“-Produzenten
-            if ($name === "undefined") continue;
-            if ($name === "null") continue;
-
-            // 4️⃣ skip blocked
+            if ($name === "undefined" || $name === "null") continue;
             if (in_array($name, $blocked)) continue;
 
-            echo "<option value='" . htmlspecialchars($name) . "''>";
+            echo "<option value='" . htmlspecialchars($name) . "'>";
         }
     }
     ?>
-</datalist>
-
+    </datalist>
 
     <button type="submit" name="action" value="add">Add</button>
 </form>

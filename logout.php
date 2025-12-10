@@ -1,7 +1,7 @@
 <?php
 require "start.php";   // BackendService + Session wird hier gestartet
 
-session_unset();      // Alle Session-Variablen löschen
+session_unset();        // Alle Session-Variablen löschen
 ?>
 <!DOCTYPE html>
 <html lang="en">

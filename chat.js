@@ -17,10 +17,13 @@ document.addEventListener("DOMContentLoaded", () => {
 // ELEMENTE AUS DEM HTML
 // -----------------------------
 
+// HTML hat KEINE Sonder-IDs → wir greifen über Klassen zu:
 const sendBtn = document.querySelector(".chat-input button");
 
+// HTML hat KEIN id="message" → Eingabe ist das .chat-input input:
 const msgInput = document.querySelector(".chat-input input");
 
+// Nachrichtenausgabe = .chat-box
 const messageList = document.querySelector(".chat-box");
 
 const friend = getChatpartner();
@@ -89,7 +92,6 @@ function renderMessages(data) {
             hour12: false
         });
 
-        // EXAKTES HTML, DAS DEIN CSS ERWARTET:
         const wrapper = document.createElement("div");
         wrapper.className = "message";
 
@@ -105,7 +107,6 @@ function renderMessages(data) {
         timeSpan.className = "time";
         timeSpan.textContent = time;
 
-        // Reihenfolge wie im CSS vorgesehen
         wrapper.appendChild(senderSpan);
         wrapper.appendChild(textSpan);
         wrapper.appendChild(timeSpan);

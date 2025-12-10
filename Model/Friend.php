@@ -25,7 +25,18 @@ class Friend implements JsonSerializable
         return $this->status;
     }
 
-    // Zustandsänderungen
+    // Setter (from Nina)
+    public function setUsername($username)
+    {
+        $this->username = $username;
+    }
+
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
+
+    // Status ändern
     public function accept()
     {
         $this->status = "accepted";
@@ -36,13 +47,13 @@ class Friend implements JsonSerializable
         $this->status = "dismissed";
     }
 
-    // JSON-Serialisierung
+    // JSON Serialisierung
     public function jsonSerialize(): mixed
     {
         return get_object_vars($this);
     }
 
-    // Von JSON in Friend-Objekt
+    // JSON → Objekt
     public static function fromJson($data): Friend
     {
         $friend = new Friend();

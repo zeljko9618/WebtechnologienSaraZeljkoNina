@@ -5,14 +5,19 @@ if (!isset($_SESSION['user'])) {
     http_response_code(401); // not authorized
     return;
 }
+
 error_log("Backend URL: " . $service->link);
+
 // Backend aufrufen
 $friends = $service->loadFriends();
+
 if ($friends) {
     // erhaltene Friend-Objekte im JSON-Format senden 
     echo json_encode($friends);
 }
-/* http status code setzen
+
+/*
+ * http status code setzen
  * - 200 Friends gesendet
  * - 404 Fehler
  */
