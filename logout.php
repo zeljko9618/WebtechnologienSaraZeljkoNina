@@ -8,7 +8,11 @@ session_unset();        // Alle Session-Variablen löschen
 <head>
   <meta charset="UTF-8">
   <title>Logout</title>
-  <link rel="stylesheet" href="./style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+    rel="stylesheet">
 </head>
 
 <body class="logged-out">
@@ -21,5 +25,6 @@ session_unset();        // Alle Session-Variablen löschen
 
     <p><a href="login.php" class="login-link">Login again</a></p>
   </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

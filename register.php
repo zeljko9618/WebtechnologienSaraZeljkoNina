@@ -67,7 +67,11 @@ $repeat   = $repeat ?? "";
 <head>
     <meta charset="UTF-8">
     <title>Register here!</title>
-    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+    rel="stylesheet">
 </head>
 
 <body>
@@ -82,12 +86,12 @@ $repeat   = $repeat ?? "";
         <!-- USERNAME -->
         <label for="username">Username</label>
         <input 
-            type="text" 
-            id="username" 
+            type="text"
+            id="username"
             name="username"
             value="<?= htmlspecialchars($username) ?>"
         >
-        <p class="error-message" id="usernameError">
+        <p class="text-danger" id="usernameError">
             <?= $usernameError ?>
         </p>
 
@@ -98,7 +102,7 @@ $repeat   = $repeat ?? "";
             id="password" 
             name="pw"
         >
-        <p class="error-message" id="passwordError">
+        <p class="text-danger" id="passwordError">
             <?= $passwordError ?>
         </p>
 
@@ -117,17 +121,16 @@ $repeat   = $repeat ?? "";
     </div>
 
     <div class="buttons">
-      <button class="gray" type="button" onclick="window.location.href='login.php'">
+      <button type="button" class="btn btn-secondary" onclick="window.location.href='login.php'">
         Cancel
       </button>
-      <button class="blue" type="submit">
+      <button type="submit" class="btn btn-primary">
         Create Account
       </button>
     </div>
-
 </form>
-
 <script src="main.js"></script>
 <script src="register.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
