@@ -75,11 +75,7 @@ $allUsers = $service->loadUsers();
     <meta charset="UTF-8">
     <title>Friends of <?= htmlspecialchars($currentUser) ?></title>
     <link rel="stylesheet" href="style.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-        rel="stylesheet">
+    <script src="friends.js" defer></script>
 </head>
 
 <body class="friends-page">
@@ -146,6 +142,5 @@ $allUsers = $service->loadUsers();
     <p class="error-message"><?= htmlspecialchars($error) ?></p>
 <?php endif; ?>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

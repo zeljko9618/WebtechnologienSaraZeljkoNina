@@ -1,11 +1,13 @@
 <?php
 require("start.php");
 
+// Prüfen ob User eingeloggt ist
 if (!isset($_SESSION['user']) || empty($_SESSION['user'])) {
     header("Location: login.php");
     exit();
 }
 
+// Prüfen ob ein Profilnutzer übergeben wurde
 if (!isset($_GET['user']) || empty($_GET['user'])) {
     header("Location: friends.php");
     exit();
@@ -14,118 +16,82 @@ if (!isset($_GET['user']) || empty($_GET['user'])) {
 $profileUser = $_GET['user'];
 $currentUser = $_SESSION['user'];
 
+// User laden
 $user = $service->loadUser($profileUser);
 if (!$user) {
     header("Location: friends.php");
     exit();
 }
 
+// Werte vorbereiten
 $firstName   = $user->getFirstName()   ?? 'N/A';
 $lastName    = $user->getLastName()    ?? 'N/A';
 $coffeeOrTea = $user->getCoffeOrTea()  ?? 'N/A';
 $description = $user->getDescription() ?? 'No description available.';
+$history     = $user->getHistory();
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Profile of <?= htmlspecialchars($profileUser) ?></title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-    rel="stylesheet">
+  <title>Profile of <?= htmlspecialchars($profileUser); ?></title>
+  <link rel="stylesheet" href="./style.css">
 </head>
 
-<body>
-<div class="container mt-4">
+<body class="profile-page">
 
-  <h1 class="mb-3">Profile of <?= htmlspecialchars($profileUser) ?></h1>
+  <h1>Profile of <?= htmlspecialchars($profileUser); ?></h1>
 
-  <!-- ACTION BUTTONS -->
-  <div class="mb-4">
-    <a href="chat.php?friend=<?= urlencode($profileUser) ?>"
-       class="btn btn-secondary me-2">
-      &lt; Back to Chat
-    </a>
+  <p>
+    <a href="chat.php?friend=<?= urlencode($profileUser); ?>" class="friendslist">&lt; Back to Chat</a> |
+    <a href="friends.php?action=remove-friend&friend=<?= urlencode($profileUser); ?>" class="remove-friend">Remove Friend</a>
+  </p>
 
-    <button class="btn btn-danger"
-            data-bs-toggle="modal"
-            data-bs-target="#removeFriendModal">
-      Remove Friend
-    </button>
-  </div>
+  <div class="profile-container">
 
-  <!-- PROFILE CONTENT -->
-  <div class="row">
-    <div class="col-md-4">
-      <div class="card text-center">
-        <div class="card-body">
-          <img src="images/user.png"
-               alt="Profile Picture"
-               class="img-fluid mb-3"
-               style="max-width:150px;">
-        </div>
-      </div>
+    <div class="profile-left">
+      <img src="images/user.png" alt="Profile Picture" class="profile-pic">
     </div>
 
-    <div class="col-md-8">
-      <div class="card">
-        <div class="card-body">
+    <div class="profile-right">
+      <fieldset class="friend">
+        <legend>Base Data</legend>
 
-          <p><?= nl2br(htmlspecialchars($description)) ?></p>
+        <p class="info-block">
+          <b>First Name:</b><br>
+          <?= htmlspecialchars($firstName); ?>
+        </p>
 
-          <table class="table mt-4">
-            <tr>
-              <th>Coffee or Tea?</th>
-              <td><?= htmlspecialchars($coffeeOrTea) ?></td>
-            </tr>
-            <tr>
-              <th>Name</th>
-              <td><?= htmlspecialchars($firstName . ' ' . $lastName) ?></td>
-            </tr>
-          </table>
+        <p class="info-block">
+          <b>Last Name:</b><br>
+          <?= htmlspecialchars($lastName); ?>
+        </p>
 
-        </div>
-      </div>
+        <p class="info-block">
+          <b>Coffee or Tea:</b><br>
+          <?= htmlspecialchars($coffeeOrTea); ?>
+        </p>
+
+        <p class="info-block">
+          <b>Description:</b><br>
+          <?= nl2br(htmlspecialchars($description)); ?>
+        </p>
+
+        <?php if (is_array($history) && count($history) > 0): ?>
+        <p class="info-block">
+          <b>Profile Changes:</b><br>
+          <ul>
+            <?php foreach ($history as $timestamp): ?>
+              <li><?= htmlspecialchars($timestamp); ?></li>
+            <?php endforeach; ?>
+          </ul>
+        </p>
+        <?php endif; ?>
+
+      </fieldset>
     </div>
+
   </div>
 
-</div>
-
-<!-- REMOVE FRIEND MODAL -->
-<div class="modal fade" id="removeFriendModal" tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-
-      <div class="modal-header">
-        <h5 class="modal-title">Remove Friend</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-
-      <div class="modal-body">
-        Are you sure you want to remove
-        <strong><?= htmlspecialchars($profileUser) ?></strong>
-        from your friends list?
-      </div>
-
-      <div class="modal-footer">
-        <button type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal">
-          Cancel
-        </button>
-
-        <a href="friends.php?action=remove-friend&friend=<?= urlencode($profileUser) ?>"
-           class="btn btn-danger">
-          Remove Friend
-        </a>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
