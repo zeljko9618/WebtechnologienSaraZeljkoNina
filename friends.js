@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const friendList  = document.getElementById("friend-list");
     const requestList = document.getElementById("request-list");
+    const requestModal = new bootstrap.Modal(document.getElementById('requestModal'));
 
     function loadFriends() {
         const xhr = new XMLHttpRequest();
@@ -33,41 +34,47 @@ document.addEventListener("DOMContentLoaded", function () {
         friends.forEach(f => {
 
             if (f.status === "accepted") {
-                const li = document.createElement("li");
-                const a  = document.createElement("a");
+                const link = document.createElement("a");
+                link.href = "chat.php?friend=" + encodeURIComponent(f.username);
+                link.className = "list-group-item list-group-item-action";
 
-                a.href = "chat.php?friend=" + encodeURIComponent(f.username);
-                a.textContent = f.username;
-
+                let text = f.username;
                 if (f.unread && f.unread > 0) {
-                    a.textContent += " (" + f.unread + ")";
+                    text += " <span class='badge bg-primary ms-2'>" + f.unread + "</span>";
                 }
 
-                li.appendChild(a);
-                friendList.appendChild(li);
+                link.innerHTML = text;
+                friendList.appendChild(link);
             }
 
             if (f.status === "requested") {
                 const li = document.createElement("li");
+                li.className = "list-group-item";
 
-                li.innerHTML = `
-                    Friend request from <b>${f.username}</b>
-                    <form method="post" action="friends.php" style="display:inline;">
-                        <input type="hidden" name="action" value="accept">
-                        <input type="hidden" name="friend" value="${f.username}">
-                        <button type="submit">Accept</button>
-                    </form>
+                const friendName = document.createElement("span");
+                friendName.textContent = f.username;
 
-                    <form method="post" action="friends.php" style="display:inline;">
-                        <input type="hidden" name="action" value="reject">
-                        <input type="hidden" name="friend" value="${f.username}">
-                        <button type="submit" id="danger-color-button">Reject</button>
-                    </form>
-                `;
+                const button = document.createElement("button");
+                button.type = "button";
+                button.className = "btn btn-sm btn-primary ms-3";
+                button.textContent = "Review";
+                button.addEventListener("click", function() {
+                    showRequestModal(f.username);
+                });
 
+                li.appendChild(friendName);
+                li.appendChild(button);
                 requestList.appendChild(li);
             }
         });
+    }
+
+    function showRequestModal(username) {
+        document.getElementById("requestModalText").textContent = 
+            "Do you want to accept the friend request from " + username + "?";
+        document.getElementById("requestFriendName").value = username;
+        document.getElementById("rejectFriendName").value = username;
+        requestModal.show();
     }
 
     loadFriends();

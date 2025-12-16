@@ -1,70 +1,60 @@
-// -----------------------------
-// CHAT HELFER
-// -----------------------------
-function getChatpartner() {
-    const url = new URL(window.location.href);
-    return url.searchParams.get("friend");
-}
-
 document.addEventListener("DOMContentLoaded", () => {
-    const friend = getChatpartner();
-
-    // Header setzen (falls nötig)
-    const chatHeader = document.querySelector("body.chat-page h1");
-    if (chatHeader && friend) {
-        chatHeader.textContent = "Chat with " + friend;
-    }
+    // Hole Chat-Partner aus URL
+    const url = new URL(window.location.href);
+    const chatPartner = url.searchParams.get("friend");
 
     // Elemente aus dem HTML
-    const sendBtn = document.querySelector(".chat-input button");
-    const msgInput = document.querySelector(".chat-input input");
+    const sendBtn = document.querySelector(".input-group button");
+    const msgInput = document.querySelector(".input-group input");
     const messageList = document.querySelector(".chat-box");
 
-    if (!sendBtn || !msgInput || !messageList || !friend) {
+    if (!sendBtn || !msgInput || !messageList || !chatPartner) {
         console.error("Chat-Elemente nicht gefunden – prüfe HTML-Struktur.");
         return;
     }
 
-    // -----------------------------
+    // ========================================
     // SENDEN MIT ENTER
-    // -----------------------------
+    // ========================================
     msgInput.addEventListener("keypress", function (event) {
         if (event.key === "Enter") {
             event.preventDefault();
             const msg = msgInput.value.trim();
             if (msg !== "") {
-                sendMessage(msg, friend, messageList);
+                sendMessage(msg, chatPartner, messageList);
                 msgInput.value = "";
+                msgInput.focus();
             }
         }
     });
 
-    // -----------------------------
+    // ========================================
     // SEND-BUTTON
-    // -----------------------------
+    // ========================================
     sendBtn.addEventListener("click", (e) => {
         e.preventDefault();
         const msg = msgInput.value.trim();
         if (msg !== "") {
-            sendMessage(msg, friend, messageList);
+            sendMessage(msg, chatPartner, messageList);
             msgInput.value = "";
+            msgInput.focus();
         }
     });
 
-    // -----------------------------
+    // ========================================
     // AUTO-REFRESH
-    // -----------------------------
+    // ========================================
     function refresh() {
-        loadMessages(friend, messageList);
+        loadMessages(chatPartner, messageList);
     }
 
     setInterval(refresh, 1000);
     refresh(); // Initial laden
 });
 
-// -----------------------------
+// ========================================
 // SEND MESSAGE (über PHP-Proxy)
-// -----------------------------
+// ========================================
 function sendMessage(message, receiver, messageList) {
     let xhr = new XMLHttpRequest();
 
@@ -86,9 +76,9 @@ function sendMessage(message, receiver, messageList) {
     xhr.send(payload);
 }
 
-// -----------------------------
+// ========================================
 // NACHRICHTEN LADEN (über PHP-Proxy)
-// -----------------------------
+// ========================================
 function renderMessages(data, messageList) {
     messageList.innerHTML = "";
 
@@ -103,10 +93,10 @@ function renderMessages(data, messageList) {
         });
 
         const wrapper = document.createElement("div");
-        wrapper.className = "message";
+        wrapper.className = "message mb-2 p-2 bg-white rounded";
 
         const senderSpan = document.createElement("span");
-        senderSpan.className = "sender";
+        senderSpan.className = "sender fw-bold text-primary me-2";
         senderSpan.textContent = name;
 
         const textSpan = document.createElement("span");
@@ -114,7 +104,8 @@ function renderMessages(data, messageList) {
         textSpan.textContent = msg;
 
         const timeSpan = document.createElement("span");
-        timeSpan.className = "time";
+        timeSpan.className = "time text-muted ms-2";
+        timeSpan.style.fontSize = "0.85rem";
         timeSpan.textContent = time;
 
         wrapper.appendChild(senderSpan);
@@ -123,6 +114,9 @@ function renderMessages(data, messageList) {
 
         messageList.appendChild(wrapper);
     });
+
+    // Scroll to bottom
+    messageList.scrollTop = messageList.scrollHeight;
 }
 
 function loadMessages(friend, messageList) {
