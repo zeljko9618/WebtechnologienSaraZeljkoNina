@@ -86,8 +86,10 @@ $allUsers = $service->loadUsers();
                 <h1 class="mb-3">Friends of <?= htmlspecialchars($currentUser) ?></h1>
                 
                 <nav class="mb-4">
-                    <a href="logout.php" class="btn btn-outline-secondary btn-sm me-2">Logout</a>
-                    <a href="settings.php" class="btn btn-outline-secondary btn-sm">Settings</a>
+                    <div class="btn-group" role="group">
+                        <a href="logout.php" class="btn btn-secondary btn-sm">← Logout</a>
+                        <a href="settings.php" class="btn btn-secondary btn-sm">Edit Profile</a>
+                    </div>
                 </nav>
 
                 <!-- FRIENDS LIST -->
@@ -98,9 +100,9 @@ $allUsers = $service->loadUsers();
 
                 <!-- FRIEND REQUESTS -->
                 <h2 class="mt-4 mb-3">Friend Requests</h2>
-                <ol class="list-group list-group-numbered mb-4" id="request-list">
+                <div class="list-group mb-4" id="request-list">
                     <!-- Wird durch JavaScript gefüllt -->
-                </ol>
+                </div>
 
                 <!-- ADD FRIEND FORM -->
                 <h2 class="mt-4 mb-3">Add Friend</h2>
@@ -115,7 +117,7 @@ $allUsers = $service->loadUsers();
                                autocomplete="off"
                                value="<?= htmlspecialchars($_POST['friendRequestName'] ?? '') ?>"
                                aria-label="Username">
-                        <button class="btn btn-outline-primary" type="submit" name="action" value="add">Add Friend</button>
+                        <button class="btn btn-outline-primary" type="submit" name="action" value="add">Add</button>
                     </div>
 
                     <datalist id="friend-selector">
@@ -163,19 +165,18 @@ $allUsers = $service->loadUsers();
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p id="requestModalText"></p>
+                    <p id="requestModalText">Accept request?</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <form id="rejectForm" method="post" action="friends.php" style="display:inline;">
+                        <input type="hidden" name="action" value="reject">
+                        <input type="hidden" name="friend" id="rejectFriendName">
+                        <button type="submit" class="btn btn-secondary">Dismiss</button>
+                    </form>
                     <form id="acceptForm" method="post" action="friends.php" style="display:inline;">
                         <input type="hidden" name="action" value="accept">
                         <input type="hidden" name="friend" id="requestFriendName">
                         <button type="submit" class="btn btn-primary">Accept</button>
-                    </form>
-                    <form id="rejectForm" method="post" action="friends.php" style="display:inline;">
-                        <input type="hidden" name="action" value="reject">
-                        <input type="hidden" name="friend" id="rejectFriendName">
-                        <button type="submit" class="btn btn-danger">Reject</button>
                     </form>
                 </div>
             </div>

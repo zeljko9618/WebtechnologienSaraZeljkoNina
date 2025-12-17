@@ -36,44 +36,48 @@ document.addEventListener("DOMContentLoaded", function () {
             if (f.status === "accepted") {
                 const link = document.createElement("a");
                 link.href = "chat.php?friend=" + encodeURIComponent(f.username);
-                link.className = "list-group-item list-group-item-action";
+                link.className = "list-group-item list-group-item-action d-flex justify-content-between align-items-center";
 
-                let text = f.username;
+                const name = document.createElement("span");
+                name.textContent = f.username;
+                link.appendChild(name);
+
                 if (f.unread && f.unread > 0) {
-                    text += " <span class='badge bg-primary ms-2'>" + f.unread + "</span>";
+                    const badge = document.createElement("span");
+                    badge.className = "badge bg-primary rounded-pill";
+                    badge.textContent = f.unread;
+                    link.appendChild(badge);
                 }
 
-                link.innerHTML = text;
                 friendList.appendChild(link);
             }
 
             if (f.status === "requested") {
-                const li = document.createElement("li");
-                li.className = "list-group-item";
-
-                const friendName = document.createElement("span");
-                friendName.textContent = f.username;
-
-                const button = document.createElement("button");
-                button.type = "button";
-                button.className = "btn btn-sm btn-primary ms-3";
-                button.textContent = "Review";
-                button.addEventListener("click", function() {
+                const item = document.createElement("div");
+                item.className = "list-group-item";
+                
+                const textNode = document.createTextNode("Friend request from ");
+                item.appendChild(textNode);
+                
+                const nameSpan = document.createElement("strong");
+                nameSpan.textContent = f.username;
+                nameSpan.style.cursor = "pointer";
+                nameSpan.addEventListener("click", function() {
                     showRequestModal(f.username);
                 });
-
-                li.appendChild(friendName);
-                li.appendChild(button);
-                requestList.appendChild(li);
+                
+                item.appendChild(nameSpan);
+                requestList.appendChild(item);
             }
         });
     }
 
     function showRequestModal(username) {
         document.getElementById("requestModalText").textContent = 
-            "Do you want to accept the friend request from " + username + "?";
+            "Accept request?";
         document.getElementById("requestFriendName").value = username;
         document.getElementById("rejectFriendName").value = username;
+        document.getElementById("requestModalLabel").textContent = "Request from " + username;
         requestModal.show();
     }
 
