@@ -164,21 +164,24 @@ $allUsers = $service->loadUsers();
                     <h5 class="modal-title" id="requestModalLabel">Friend Request</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <p id="requestModalText">Accept request?</p>
+                <div class="modal-body text-center">
+                    <p id="requestModalText" class="mb-0">Accept request?</p>
                 </div>
-                <span class="modal-footer">
-                    <form id="rejectForm" method="post" action="friends.php" style="display:inline;">
+
+                <div class="modal-footer justify-content-end gap-2">
+                    <form id="rejectForm" method="post" action="friends.php" class="d-inline m-0">
                         <input type="hidden" name="action" value="reject">
                         <input type="hidden" name="friend" id="rejectFriendName">
                         <button type="submit" class="btn btn-secondary">Dismiss</button>
                     </form>
-                    <form id="acceptForm" method="post" action="friends.php" style="display:inline;">
+
+                    <form id="acceptForm" method="post" action="friends.php" class="d-inline m-0">
                         <input type="hidden" name="action" value="accept">
                         <input type="hidden" name="friend" id="requestFriendName">
                         <button type="submit" class="btn btn-primary">Accept</button>
                     </form>
-                </span>
+                </div>
+
             </div>
         </div>
     </div>

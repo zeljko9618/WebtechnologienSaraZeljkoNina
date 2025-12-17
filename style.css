@@ -1020,3 +1020,116 @@ body.profile-page p a.remove-friend:hover {
   margin-top: -5px;
   height: 16px; /* verhindert Layout-Sprung */
 }
+
+/* =================== Bootstrap-Override nur für Friends-Seite =========================== */
+
+
+/* FIX: Add-Button auf Input-Höhe bringen */
+body.friends-page form .input-group .btn {
+  height: 32px;
+  padding: 0 12px;     /* horizontal ok, vertikal = 0 */
+  margin-top: 0;
+  display: flex;
+  align-items: center;
+}
+
+/* Add-Button Bootstrap-blau machen */
+body.friends-page form .input-group .btn.btn-primary {
+  background-color: #0d6efd;   /* Bootstrap Primary */
+  border-color: #0d6efd;
+  color: #fff;
+}
+
+body.chat-page div .mb-4 .btn.btn-danger {
+  margin-top: 10px;
+}
+
+
+
+body.chat-page .input-group .form-control {
+  height: 38px;
+}
+
+/* NUR Send-Button in der Input-Group */
+body.chat-page .input-group > .btn.btn-primary {
+  height: 38px;
+  margin: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  display: flex;
+  align-items: center;
+}
+
+/* NUR Remove-Friend Button */
+body.chat-page .btn.btn-danger {
+  height: 38px;
+  margin: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  display: flex;
+  align-items: center;
+}
+
+/* Optional: Input gleich hoch wie Send */
+body.chat-page .input-group > .form-control {
+  height: 38px;
+}
+
+/* Chat: NUR Remove Friend + Send fixen (und Inline überschreiben) */
+body.chat-page button.btn.btn-danger {
+  height: 38px !important;
+  margin: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+}
+
+/* Send-Button NUR in der Input-Group */
+body.chat-page .input-group > button.btn.btn-primary {
+  height: 38px !important;
+  margin: 0 !important;        /* überschreibt auch margin-top inline */
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+}
+
+/* Optional: Input exakt gleich hoch */
+body.chat-page .input-group > input.form-control {
+  height: 38px !important;
+}
+
+
+/* Modal: Text mittig */
+body.friends-page .modal-body {
+  text-align: center;
+}
+
+/* Modal: Footer Buttons nebeneinander (Dismiss grau, Accept blau) */
+body.friends-page .modal-footer {
+  display: flex !important;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+/* WICHTIG: Deine globale body.friends-page form Regel NICHT im Modal anwenden */
+body.friends-page .modal-footer form {
+  width: auto !important;
+  max-width: none !important;
+  margin: 0 !important;
+  display: inline-block !important;
+  gap: 0 !important;
+}
+
+/* Optional: Buttons im Modal ohne extra Margins */
+body.friends-page .modal-footer .btn {
+  margin: 0 !important;
+}
+
+/* Accept MUSS blau sein (Bootstrap Primary) */
+body.friends-page .modal-footer .btn-primary {
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+  color: #fff;
+}

@@ -46,8 +46,8 @@ $currentUser = $_SESSION['user'];
 
         <!-- Input mit Button-Gruppe -->
         <div class="input-group mb-3">
-          <input type="text" class="form-control" name="newmessage" placeholder="New Message" aria-label="Message" style="height: auto;">
-          <button class="btn btn-primary" type="button" style="height: auto;">Send</button>
+          <input type="text" class="form-control" name="newmessage" placeholder="New Message" aria-label="Message">
+          <button class="btn btn-primary" type="button"">Send</button>
         </div>
       </div>
     </div>
