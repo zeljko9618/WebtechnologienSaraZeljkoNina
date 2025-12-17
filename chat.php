@@ -33,20 +33,20 @@ $currentUser = $_SESSION['user'];
       <div class="col-12">
         <h1 class="mb-3">Chat with <?= htmlspecialchars($chatPartner); ?></h1>
 
-        <nav class="mb-4">
-          <div class="btn-group" role="group">
-            <a href="friends.php" class="btn btn-secondary btn-sm">← Back</a>
-            <a href="profile.php?user=<?= urlencode($chatPartner); ?>" class="btn btn-secondary btn-sm">Show Profile</a>
-            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#removeFriendModal">Remove Friend</button>
-          </div>
-        </nav>
+        <div class="mb-4">
+          
+            <a href="friends.php" class="btn btn-secondary me-2">← Back</a>
+            <a href="profile.php?user=<?= urlencode($chatPartner); ?>" class="btn btn-secondary me-2">Show Profile</a>
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#removeFriendModal">Remove Friend</button>
+          
+        </div>
 
         <!-- Chatbox -->
         <div class="chat-box mb-4 p-3 border rounded" style="min-height: 300px; max-height: 500px; overflow-y: auto; background-color: #f8f9fa;"></div>
 
         <!-- Input mit Button-Gruppe -->
-        <div class="input-group mt-4">
-          <input type="text" class="form-control form-control-lg" name="newmessage" placeholder="New Message" aria-label="Message" style="height: auto;">
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" name="newmessage" placeholder="New Message" aria-label="Message" style="height: auto;">
           <button class="btn btn-primary" type="button" style="height: auto;">Send</button>
         </div>
       </div>

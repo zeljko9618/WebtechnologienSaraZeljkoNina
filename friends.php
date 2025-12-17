@@ -107,7 +107,7 @@ $allUsers = $service->loadUsers();
                 <!-- ADD FRIEND FORM -->
                 <h2 class="mt-4 mb-3">Add Friend</h2>
                 <form action="friends.php" method="post" class="mb-4">
-                    <div class="input-group">
+                    <div class="input-group mb-3">
                         <input type="text" 
                                id="friend-request-name" 
                                name="friendRequestName"
@@ -117,7 +117,7 @@ $allUsers = $service->loadUsers();
                                autocomplete="off"
                                value="<?= htmlspecialchars($_POST['friendRequestName'] ?? '') ?>"
                                aria-label="Username">
-                        <button class="btn btn-outline-primary" type="submit" name="action" value="add">Add</button>
+                        <button class="btn btn-primary" type="submit" name="action" value="add">Add</button>
                     </div>
 
                     <datalist id="friend-selector">
@@ -167,7 +167,7 @@ $allUsers = $service->loadUsers();
                 <div class="modal-body">
                     <p id="requestModalText">Accept request?</p>
                 </div>
-                <div class="modal-footer">
+                <span class="modal-footer">
                     <form id="rejectForm" method="post" action="friends.php" style="display:inline;">
                         <input type="hidden" name="action" value="reject">
                         <input type="hidden" name="friend" id="rejectFriendName">
@@ -178,7 +178,7 @@ $allUsers = $service->loadUsers();
                         <input type="hidden" name="friend" id="requestFriendName">
                         <button type="submit" class="btn btn-primary">Accept</button>
                     </form>
-                </div>
+                </span>
             </div>
         </div>
     </div>
